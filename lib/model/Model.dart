@@ -1,11 +1,11 @@
 class Model {
 
-  int _count = 0;
+  int _code = 777;
 
-  get counter => _count;
+  int get code => _code;
 
-  void incrementCounter() => ++_count;
+  void incrementCounter() => ++_code;
 
-  void decrementCounter() => --_count;
+  void decrementCounter() => --_code;
   
 }

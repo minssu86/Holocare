@@ -12,7 +12,7 @@ class HomeController extends ControllerMVC {
   static HomeController? _this;
   final Model _model;
 
-  int get count => _model.counter;
+  int get code => _model.code;
 
   void update() => setState(() {});
 
