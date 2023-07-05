@@ -10,15 +10,15 @@ class HolocareText {
 
   factory HolocareText() {
     return const HolocareText._(
-      h24: TextStyle(fontSize: FontSize.pt24),
-      h16: TextStyle(fontSize: FontSize.pt24),
-      b14: TextStyle(fontSize: FontSize.pt24),
+      h24: FontSize.pt24,
+      h16: FontSize.pt24,
+      b14: FontSize.pt24,
     );
   }
 
-  final TextStyle h24;
-  final TextStyle h16;
-  final TextStyle b14;
+  final double h24;
+  final double h16;
+  final double b14;
 }
 
 extension TextStyleExt on TextStyle {
