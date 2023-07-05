@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:holocare/theme/holocare_colors.dart';
 import 'package:holocare/theme/holocare_text.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final holocareThemeProvider = Provider<HolocareTheme>((ref) => HolocareTheme());
 
 class HolocareTheme {
   HolocareTheme._({
