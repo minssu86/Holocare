@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -27,18 +28,11 @@ class RoleCard extends ConsumerWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
-                color: theme.appColors.grayscale_100,
-                fontSize: theme.textTheme.h16,
-                fontWeight: FontWeight.w600,
-              ),
+              style: theme.textTheme.h16.bold(),
             ),
             Text(
               description,
-              style: TextStyle(
-                fontSize: theme.textTheme.b14,
-                color: theme.appColors.grayscale_50,
-              ),
+              style: theme.textTheme.h16.description(),
             ),
           ],
         ),

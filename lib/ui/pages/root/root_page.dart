@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
 import 'package:holocare/ui/components/button/holocare_button.dart';
 import 'package:holocare/ui/components/card/role_card.dart';
@@ -30,19 +31,12 @@ class RootPage extends HookConsumerWidget {
                         children: [
                           Text(
                             "역할을 선택해주세요",
-                            style: TextStyle(
-                              color: theme.appColors.grayscale_100,
-                              fontSize: theme.textTheme.h24,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: theme.textTheme.h24.bold().title(),
                           ),
                           const Gap(24),
                           Text(
                             "역할을 수정할 수 없으니 신중하게 선택해주세요",
-                            style: TextStyle(
-                              color: theme.appColors.grayscale_50,
-                              fontSize: theme.textTheme.b14,
-                            ),
+                            style: theme.textTheme.b14.description(),
                           ),
                         ],
                       ),

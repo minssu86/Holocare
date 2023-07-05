@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:holocare/theme/h_color.dart';
 
 class HolocareColors {
   const HolocareColors._({
@@ -14,14 +15,14 @@ class HolocareColors {
 
   factory HolocareColors() {
     return const HolocareColors._(
-      primary: Color(0xFFB41A7F),
-      secondary: Color(0xFFF5E3EF),
-      success: Color(0xFF66BB6A),
-      warning: Color(0xFFF44336),
-      grayscale_100: Color(0xFF000000),
-      grayscale_50: Color(0xFF8C8C8C),
-      grayscale_25: Color(0xFFF1F1F1),
-      grayscale_00: Color(0xFFFFFFFF),
+      primary: HColor.primary,
+      secondary: HColor.secondary,
+      success: HColor.success,
+      warning: HColor.warning,
+      grayscale_100: HColor.grayscale_100,
+      grayscale_50: HColor.grayscale_50,
+      grayscale_25: HColor.grayscale_25,
+      grayscale_00: HColor.grayscale_00,
     );
   }
 
