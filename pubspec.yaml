@@ -42,6 +42,7 @@ dependencies:
   hooks_riverpod: ^2.3.6
   flutter_hooks: ^0.18.6
   gap: ^3.0.1
+  pin_code_fields: ^8.0.1
 
 dev_dependencies:
   flutter_test:
