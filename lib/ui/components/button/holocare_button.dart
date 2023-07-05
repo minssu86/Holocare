@@ -29,6 +29,7 @@ class HolocareButton extends ConsumerWidget {
               style: TextStyle(
                 color: theme.appColors.primary,
                 fontSize: theme.textTheme.h16,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],
