@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
+import 'package:holocare/ui/components/appbar/holocare_app_bar.dart';
 import 'package:holocare/ui/components/button/holocare_button.dart';
 import 'package:holocare/ui/components/text_field/holocare_pin_code_field.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,6 +17,7 @@ class RootProtectorPage extends HookConsumerWidget {
     final theme = ref.watch(holocareThemeProvider);
 
     return Scaffold(
+      appBar: HolocareAppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 60),
         child: Column(
