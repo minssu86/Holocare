@@ -5,31 +5,35 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HolocareButton extends ConsumerWidget {
   String title;
+  GestureTapCallback? onTap;
 
-  HolocareButton({super.key, required this.title});
+  HolocareButton({super.key, required this.title, this.onTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(holocareThemeProvider);
 
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.appColors.secondary,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 16,
-          horizontal: 12,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: theme.appColors.secondary,
+          borderRadius: BorderRadius.circular(12),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: theme.textTheme.h16.primary().bold(),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 16,
+            horizontal: 12,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: theme.textTheme.h16.primary().bold(),
+              ),
+            ],
+          ),
         ),
       ),
     );
