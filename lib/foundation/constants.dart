@@ -51,3 +51,14 @@ class Constants {
   final String androidProjectId;
   final String androidStorageBucket;
 }
+
+enum Role {
+  protector(role: "protector"),
+  protege(role: "protege");
+
+  const Role({
+    required this.role,
+  });
+
+  final String role;
+}
