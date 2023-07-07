@@ -7,6 +7,18 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Dashboard Page!");
+    return const Scaffold(
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 60,
+        ),
+        child: Column(
+          children: [
+            Text("안전을\n확인하고 있습니다."),
+          ],
+        ),
+      ),
+    );
   }
 }
