@@ -6,16 +6,14 @@ import 'package:holocare/firebase_options.dart';
 import 'package:holocare/holocare.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // env load
-  await dotenv.load(fileName: ".env");
-
-  // Firebase
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  runZonedGuarded(() {
+void main() {
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    // env load
+    await dotenv.load(fileName: ".env");
+    // Firebase
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
     runApp(const ProviderScope(child: Holocare()));
   }, (error, stack) {
     print(error);
