@@ -6,8 +6,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class RoleCard extends ConsumerWidget {
   String title;
   String description;
+  bool active;
 
-  RoleCard({super.key, required this.title, required this.description});
+  RoleCard({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.active,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,6 +22,11 @@ class RoleCard extends ConsumerWidget {
     return Container(
       decoration: BoxDecoration(
         color: theme.appColors.grayscale_25,
+        border: Border.all(
+            width: 2,
+            color: active
+                ? theme.appColors.primary
+                : theme.appColors.grayscale_50),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(

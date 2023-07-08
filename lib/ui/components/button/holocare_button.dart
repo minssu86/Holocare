@@ -17,8 +17,8 @@ class HolocareButton extends ConsumerWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: theme.appColors.secondary,
-          borderRadius: BorderRadius.circular(12),
+          color: theme.appColors.primary,
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -30,7 +30,7 @@ class HolocareButton extends ConsumerWidget {
             children: [
               Text(
                 title,
-                style: theme.textTheme.h16.primary().bold(),
+                style: theme.textTheme.h16.white().bold(),
               ),
             ],
           ),

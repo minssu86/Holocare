@@ -24,7 +24,7 @@ class HolocareText {
 
 extension TextStyleExt on TextStyle {
   TextStyle bold() => copyWith(fontWeight: FontWeight.w700);
-  TextStyle primary() => copyWith(color: HColor.primary);
+  TextStyle white() => copyWith(color: HColor.grayscale_00);
   TextStyle title() => copyWith(color: HColor.grayscale_100);
   TextStyle description() => copyWith(color: HColor.grayscale_50);
 }

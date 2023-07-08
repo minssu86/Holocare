@@ -4,9 +4,10 @@ import 'package:holocare/theme/h_color.dart';
 class HolocareColors {
   const HolocareColors._({
     required this.primary,
-    required this.secondary,
+    required this.primarySecondary,
     required this.success,
     required this.warning,
+    required this.warningSecondary,
     required this.grayscale_100,
     required this.grayscale_50,
     required this.grayscale_25,
@@ -16,9 +17,10 @@ class HolocareColors {
   factory HolocareColors() {
     return const HolocareColors._(
       primary: HColor.primary,
-      secondary: HColor.secondary,
+      primarySecondary: HColor.primarySecondary,
       success: HColor.success,
       warning: HColor.warning,
+      warningSecondary: HColor.warningSecondary,
       grayscale_100: HColor.grayscale_100,
       grayscale_50: HColor.grayscale_50,
       grayscale_25: HColor.grayscale_25,
@@ -27,9 +29,10 @@ class HolocareColors {
   }
 
   final Color primary;
-  final Color secondary;
+  final Color primarySecondary;
   final Color success;
   final Color warning;
+  final Color warningSecondary;
   final Color grayscale_100;
   final Color grayscale_50;
   final Color grayscale_25;
