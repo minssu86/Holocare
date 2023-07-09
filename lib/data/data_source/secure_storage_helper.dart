@@ -19,7 +19,7 @@ class SecureStorageHelper {
   }
 
   Future<void> write(String key, String value) async {
-    await _secureStorage.read(key: key);
+    await _secureStorage.write(key: key, value: value);
   }
 
   Future<void> delete(String key) async {

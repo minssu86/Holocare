@@ -18,7 +18,9 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<User?> getUser() async {
     return _secureStorageHelper.read("user").then((value) {
-      if (value != null && value.isNotEmpty) return jsonDecode(value);
+      if (value != null && value.isNotEmpty) {
+        return User.fromJson(jsonDecode(value));
+      }
       return null;
     });
   }
