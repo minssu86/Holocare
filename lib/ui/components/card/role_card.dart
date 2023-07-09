@@ -7,45 +7,67 @@ class RoleCard extends ConsumerWidget {
   String title;
   String description;
   bool active;
+  GestureTapCallback? onTap;
 
-  RoleCard({
-    super.key,
-    required this.title,
-    required this.description,
-    required this.active,
-  });
+  RoleCard(
+      {super.key,
+      required this.title,
+      required this.description,
+      required this.active,
+      this.onTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(holocareThemeProvider);
 
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.appColors.grayscale_25,
-        border: Border.all(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: theme.appColors.grayscale_25,
+          border: Border.all(
             width: 2,
-            color: active
-                ? theme.appColors.primary
-                : theme.appColors.grayscale_50),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 24,
-          horizontal: 20,
+            color:
+                active ? theme.appColors.primary : theme.appColors.grayscale_50,
+          ),
+          borderRadius: BorderRadius.circular(8),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: theme.textTheme.h16.bold(),
-            ),
-            Text(
-              description,
-              style: theme.textTheme.h16.description(),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 24,
+            horizontal: 20,
+          ),
+          child: Row(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: theme.textTheme.h16.bold(),
+                    ),
+                    Text(
+                      description,
+                      style: theme.textTheme.h16.description(),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 0,
+                child: IconButton(
+                  iconSize: active ? 20 : 0,
+                  color: theme.appColors.primary,
+                  icon: const Icon(
+                    Icons.check_circle_rounded,
+                  ),
+                  onPressed: () {},
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
