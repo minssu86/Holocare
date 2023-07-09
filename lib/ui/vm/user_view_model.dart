@@ -1,7 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:holocare/domain/model/user.dart';
 import 'package:holocare/domain/use_case/use_case.dart';
+import 'package:holocare/foundation/constants.dart';
+import 'package:holocare/foundation/extension/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 final userViewModelProvider =
     ChangeNotifierProvider((ref) => UserViewModel(ref.read));
@@ -9,7 +12,9 @@ final userViewModelProvider =
 class UserViewModel extends ChangeNotifier {
   final dynamic _reader;
 
-  UserViewModel(this._reader);
+  UserViewModel(this._reader) {
+    _getUser();
+  }
 
   late final UseCases _useCases = _reader(useCasesProvider);
 
@@ -19,7 +24,19 @@ class UserViewModel extends ChangeNotifier {
 
   bool get isVerified => _user != null;
 
-  Future<User?> getUser() async {
+  Future<void> updateRole(Role role) async {
+    await _useCases.createUser(
+      User(
+        uuid: const Uuid().v4(),
+        role: role.role,
+        verified: "true",
+        code: Utils.generateCode(),
+      ),
+    );
+    await _getUser();
+  }
+
+  Future<User?> _getUser() async {
     return _useCases.getUser().then((result) {
       _user = result;
       notifyListeners();
