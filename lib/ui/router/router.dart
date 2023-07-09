@@ -6,14 +6,20 @@ class RootRouter extends $RootRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
-          page: RootRoute.page,
           path: "/",
-          initial: true,
+          page: RootRoute.page,
+        ),
+        AutoRoute(
+          page: RootProtegeRoute.page,
+          path: "/protege",
+        ),
+        AutoRoute(
+          page: RootProtectorRoute.page,
+          path: "/protector",
         ),
         AutoRoute(
           page: DashboardRoute.page,
           path: "/dashboard",
         ),
-        RedirectRoute(path: "*", redirectTo: "/"),
       ];
 }

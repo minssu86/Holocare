@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:holocare/foundation/constants.dart';
+import 'package:holocare/hooks/use_router.dart';
 import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
 import 'package:holocare/ui/components/button/holocare_button.dart';
 import 'package:holocare/ui/components/card/role_card.dart';
+import 'package:holocare/ui/router/router.gr.dart';
 import 'package:holocare/ui/vm/user_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -16,6 +19,7 @@ class RootPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(holocareThemeProvider);
     final userViewModel = ref.watch(userViewModelProvider);
+    final router = useRouter();
 
     return Scaffold(
       body: Padding(
@@ -55,11 +59,19 @@ class RootPage extends HookConsumerWidget {
                   RoleCard(
                     title: "보호자",
                     description: "보호자는 보호대상자의 활동이 감지되지 않으면 알림을 받습니다",
+                    active: userViewModel.user?.role == Role.protector.role,
+                    onTap: () async {
+                      await userViewModel.updateRole(Role.protector);
+                    },
                   ),
                   const Gap(12),
                   RoleCard(
                     title: "보호자",
                     description: "보호자는 보호대상자의 활동이 감지되지 않으면 알림을 받습니다",
+                    active: userViewModel.user?.role == Role.protege.role,
+                    onTap: () async {
+                      await userViewModel.updateRole(Role.protege);
+                    },
                   ),
                   const Gap(60),
                 ],
@@ -69,9 +81,7 @@ class RootPage extends HookConsumerWidget {
               flex: 1,
               child: HolocareButton(
                 title: "다음",
-                onTap: () async {
-                  await userViewModel.getUser().then((value) => print(value));
-                },
+                onTap: () => router.push(const RootProtectorRoute()),
               ),
             )
           ],
