@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:holocare/hooks/use_router.dart';
 import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
 import 'package:holocare/ui/components/appbar/holocare_app_bar.dart';
 import 'package:holocare/ui/components/button/holocare_button.dart';
 import 'package:holocare/ui/components/text_field/holocare_pin_code_field.dart';
+import 'package:holocare/ui/vm/user_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
@@ -15,9 +17,14 @@ class RootProtectorPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(holocareThemeProvider);
+    final userViewModel = ref.watch(userViewModelProvider);
+    final router = useRouter();
 
     return Scaffold(
-      appBar: HolocareAppBar(),
+      appBar: HolocareAppBar(
+        onPressed: () async =>
+            await userViewModel.deleteUser().then((_) => router.pop()),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 60),
         child: Column(
@@ -61,6 +68,7 @@ class RootProtectorPage extends HookConsumerWidget {
               flex: 1,
               child: HolocareButton(
                 title: "연결하기",
+                onTap: () async {},
               ),
             )
           ],

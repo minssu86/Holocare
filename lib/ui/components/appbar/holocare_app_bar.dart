@@ -4,8 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HolocareAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final AppBar appBar = AppBar();
+  final void Function()? onPressed;
 
-  HolocareAppBar({super.key});
+  HolocareAppBar({super.key, this.onPressed});
 
   @override
   Size get preferredSize => Size.fromHeight(appBar.preferredSize.height);
@@ -23,7 +24,7 @@ class HolocareAppBar extends ConsumerWidget implements PreferredSizeWidget {
         icon: const Icon(
           Icons.arrow_back_rounded,
         ),
-        onPressed: () {},
+        onPressed: onPressed,
       ),
     );
   }
