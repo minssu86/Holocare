@@ -81,7 +81,15 @@ class RootPage extends HookConsumerWidget {
               flex: 1,
               child: HolocareButton(
                 title: "다음",
-                onTap: () => router.push(const RootProtectorRoute()),
+                onTap: () => {
+                  userViewModel.createUser().then((_) {
+                    if (userViewModel.user!.role == Role.protege.role) {
+                      router.push(const RootProtectorRoute());
+                    } else {
+                      router.push(const RootProtegeRoute());
+                    }
+                  })
+                },
               ),
             )
           ],
