@@ -8,12 +8,15 @@ class ChoiceButton extends StatefulWidget {
     Key? key,
     this.title,
     this.deviceId,
+    this.description,
     this.type,
     // required this.function,
   }) : super(key: key);
   final title;
   final deviceId;
+  final description;
   final type;
+
   // final Widget function;
 
   @override
@@ -49,32 +52,62 @@ class _ChoiceButtonState extends State<ChoiceButton> {
       // crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Center(
-          child: Container(
-            margin: EdgeInsets.all(7),
-            width: 309,
-            height: 73,
-            child: TextButton(
-              onPressed: () => {signUp()},
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStatePropertyAll<Color>(Color(0xfff2f2f2)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                )),
-              ),
-              child: Text(
-                widget.title,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w400,
-                ),
+            child: Container(
+          margin: EdgeInsets.only(bottom: 16),
+          width: 320,
+          height: 110,
+          child: TextButton(
+            onPressed: () => {signUp()},
+            style: ButtonStyle(
+              backgroundColor:
+                  MaterialStatePropertyAll<Color>(Color(0xffffffff)),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                side: BorderSide(width: 1, color: Color(0xFF8D4BF6)),
+                borderRadius: BorderRadius.circular(8.0),
+              )),
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              // margin: EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 24),
+              child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.title,
+                            style: TextStyle(
+                              color: Color(0xFF171717),
+                              fontSize: 17,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            widget.description,
+                            style: TextStyle(
+                              color: Color(0xFF3D3D3D),
+                              fontSize: 14,
+                              overflow: TextOverflow.clip,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 8),
+                      width: 20,
+                    )
+                  ],
+                ),),
               ),
             ),
           ),
-        ),
       ],
     );
   }
