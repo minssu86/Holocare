@@ -9,8 +9,8 @@ class User with _$User {
     required String uuid,
     required String role,
     required bool verified,
-    required int code,
     required bool pause,
+    int? code,
     String? visited,
   }) = _User;
 
