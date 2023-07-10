@@ -8,8 +8,10 @@ class User with _$User {
   const factory User({
     required String uuid,
     required String role,
-    required String verified,
-    required String code,
+    required bool verified,
+    required int code,
+    required bool pause,
+    String? visited,
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
