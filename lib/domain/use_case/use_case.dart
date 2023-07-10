@@ -1,19 +1,19 @@
-import 'package:holocare/domain/use_case/create_user_use_case.dart';
-import 'package:holocare/domain/use_case/get_user_use_case.dart';
+import 'package:holocare/domain/use_case/create_local_user_use_case.dart';
+import 'package:holocare/domain/use_case/get_local_user_use_case.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final useCasesProvider = Provider(
   (ref) => UseCases(
-      getUser: GetUserUseCase(ref.read),
-      createUser: CreateUserUseCase(ref.read)),
+      getLocalUser: GetLocalUserUseCase(ref.read),
+      createLocalUser: CreateLocalUserUseCase(ref.read)),
 );
 
 class UseCases {
-  late final CreateUserUseCase createUser;
-  late final GetUserUseCase getUser;
+  late final CreateLocalUserUseCase createLocalUser;
+  late final GetLocalUserUseCase getLocalUser;
 
   UseCases({
-    required this.getUser,
-    required this.createUser,
+    required this.getLocalUser,
+    required this.createLocalUser,
   });
 }

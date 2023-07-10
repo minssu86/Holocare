@@ -13,7 +13,7 @@ class UserViewModel extends ChangeNotifier {
   final dynamic _reader;
 
   UserViewModel(this._reader) {
-    _getUser();
+    _getLocalUser();
   }
 
   late final UseCases _useCases = _reader(useCasesProvider);
@@ -25,7 +25,7 @@ class UserViewModel extends ChangeNotifier {
   bool get isVerified => _user != null;
 
   Future<void> updateRole(Role role) async {
-    await _useCases.createUser(
+    await _useCases.createLocalUser(
       User(
         uuid: const Uuid().v4(),
         role: role.role,
@@ -33,18 +33,18 @@ class UserViewModel extends ChangeNotifier {
         code: Utils.generateCode(),
       ),
     );
-    await _getUser();
+    await _getLocalUser();
   }
 
-  Future<User?> _getUser() async {
-    return _useCases.getUser().then((result) {
+  Future<User?> _getLocalUser() async {
+    return _useCases.getLocalUser().then((result) {
       _user = result;
       notifyListeners();
       return result;
     });
   }
 
-  Future<void> _createUser(User user) async {
+  Future<void> _createLocalUser(User user) async {
     print(user);
   }
 }
