@@ -30,7 +30,9 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<dynamic> getFirebstoreUser(String uuid) async {
-    return await _firestoreHelper.get(collection: "users", doc: uuid);
+    return await _firestoreHelper
+        .get(collection: "users", doc: uuid)
+        .then((value) => value.data());
   }
 
   @override
@@ -59,20 +61,22 @@ class UserRepositoryImpl implements UserRepository {
     Iterable<Object?>? whereNotIn,
     bool? isNull,
   }) async {
-    return await _firestoreHelper.query(
-      collection: "users",
-      field: field,
-      isEqualTo: isEqualTo,
-      isNotEqualTo: isNotEqualTo,
-      isLessThan: isLessThan,
-      isLessThanOrEqualTo: isLessThanOrEqualTo,
-      isGreaterThan: isGreaterThan,
-      isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
-      arrayContains: arrayContains,
-      arrayContainsAny: arrayContainsAny,
-      whereIn: whereIn,
-      whereNotIn: whereNotIn,
-      isNull: isNull,
-    );
+    return await _firestoreHelper
+        .query(
+          collection: "users",
+          field: field,
+          isEqualTo: isEqualTo,
+          isNotEqualTo: isNotEqualTo,
+          isLessThan: isLessThan,
+          isLessThanOrEqualTo: isLessThanOrEqualTo,
+          isGreaterThan: isGreaterThan,
+          isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+          arrayContains: arrayContains,
+          arrayContainsAny: arrayContainsAny,
+          whereIn: whereIn,
+          whereNotIn: whereNotIn,
+          isNull: isNull,
+        )
+        .then((value) => value.docs.map((e) => e.data()).toList());
   }
 }
