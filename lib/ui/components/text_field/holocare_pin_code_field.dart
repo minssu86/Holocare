@@ -5,13 +5,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class HolocarePinCodeField extends ConsumerWidget {
-  const HolocarePinCodeField({super.key});
+  final void Function(String)? onChanged;
+
+  const HolocarePinCodeField({super.key, this.onChanged});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(holocareThemeProvider);
 
     return PinCodeTextField(
+      onChanged: onChanged,
       appContext: context,
       length: 7,
       obscureText: false,
