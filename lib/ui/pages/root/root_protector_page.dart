@@ -8,6 +8,7 @@ import 'package:holocare/ui/components/appbar/holocare_app_bar.dart';
 import 'package:holocare/ui/components/button/holocare_button.dart';
 import 'package:holocare/ui/components/dialog/holocare_dialog.dart';
 import 'package:holocare/ui/components/text_field/holocare_pin_code_field.dart';
+import 'package:holocare/ui/router/router.gr.dart';
 import 'package:holocare/ui/vm/root_view_model.dart';
 import 'package:holocare/ui/vm/user_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -90,19 +91,44 @@ class RootProtectorPage extends HookConsumerWidget {
                         });
                     return;
                   }
-                  showDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      builder: (_) {
-                        return HolocareDialog(
-                          title: "연결에 성공하였습니다",
-                          content: "보호자가 코드를 입력하여\n연결되었습니다",
-                          button: "확인",
-                          action: () {
-                            router.pop();
+                  await userViewModel
+                      .getUsersByCode(int.parse(rootViewModel.code))
+                      .then(
+                    (_) {
+                      if (!userViewModel.isExistProtegeMember) {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (_) {
+                            return HolocareDialog(
+                              title: "연결에 실패하였습니다",
+                              content: "존재하지 않는 코드입니다",
+                              button: "확인",
+                              action: () {
+                                router.pop();
+                              },
+                            );
                           },
                         );
-                      });
+                      } else {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (_) {
+                            return HolocareDialog(
+                              title: "연결에 성공하였습니다",
+                              content: "보호자가 코드를 입력하여\n연결되었습니다",
+                              button: "확인",
+                              action: () {
+                                router.pop();
+                                router.push(const DashboardRoute());
+                              },
+                            );
+                          },
+                        );
+                      }
+                    },
+                  );
                   // await userViewModel
                   //     .getProtectorsByCode(int.parse(rootViewModel.code));
                 },
