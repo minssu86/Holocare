@@ -1,12 +1,18 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
+import 'package:holocare/domain/model/user.dart';
+import 'package:holocare/domain/use_case/member_stream_use_case.dart';
 import 'package:holocare/hooks/use_router.dart';
 import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
 import 'package:holocare/ui/components/appbar/holocare_app_bar.dart';
 import 'package:holocare/ui/components/button/holocare_button.dart';
+import 'package:holocare/ui/router/router.gr.dart';
 import 'package:holocare/ui/vm/user_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -18,7 +24,34 @@ class RootProtegePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(holocareThemeProvider);
     final userViewModel = ref.watch(userViewModelProvider);
+    final memberstream = ref.watch(memberStreamUserUseCaseProvider);
     final router = useRouter();
+
+    /**
+     * @todo
+     * stream 구독 로직 뷰에서 분리
+     */
+
+    late final StreamSubscription<Future<QuerySnapshot<Map<String, dynamic>>>>
+        subscription;
+
+    memberstream.whenData(
+      (member) {
+        subscription = member(userViewModel.user!.code!).listen(
+          (event) {
+            event.then(
+              (value) {
+                if (value.docs.map((e) => User.fromJson(e.data())).length >=
+                    2) {
+                  subscription.cancel();
+                  router.replace(const DashboardRoute());
+                }
+              },
+            );
+          },
+        );
+      },
+    );
 
     return Scaffold(
       appBar: HolocareAppBar(
@@ -96,7 +129,6 @@ class RootProtegePage extends HookConsumerWidget {
               child: HolocareButton(
                 title: "복사하기",
                 onTap: () async {
-                  print(userViewModel.user!.code);
                   await Clipboard.setData(
                     ClipboardData(text: "${userViewModel.user!.code}"),
                   );
