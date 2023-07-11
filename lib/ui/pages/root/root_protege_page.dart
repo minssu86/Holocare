@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:holocare/hooks/use_router.dart';
 import 'package:holocare/theme/holocare_text.dart';
@@ -42,7 +43,7 @@ class RootProtegePage extends HookConsumerWidget {
                         children: [
                           Text(
                             "보호자에게 코드를\n공유해주세요",
-                            style: theme.textTheme.h24.bold().title(),
+                            style: theme.textTheme.h22.bold().title(),
                           ),
                           const Gap(24),
                           Text(
@@ -63,8 +64,12 @@ class RootProtegePage extends HookConsumerWidget {
                   const Gap(60),
                   Container(
                     decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: theme.appColors.grayscale_04,
+                      ),
                       borderRadius: BorderRadius.circular(8),
-                      color: theme.appColors.grayscale_25,
+                      color: theme.appColors.white,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -75,8 +80,8 @@ class RootProtegePage extends HookConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "7489018",
-                            style: theme.textTheme.h24.bold().title(),
+                            '${userViewModel.user?.code}',
+                            style: theme.textTheme.h22.bold().title(),
                           ),
                         ],
                       ),
@@ -90,6 +95,12 @@ class RootProtegePage extends HookConsumerWidget {
               flex: 1,
               child: HolocareButton(
                 title: "복사하기",
+                onTap: () async {
+                  print(userViewModel.user!.code);
+                  await Clipboard.setData(
+                    ClipboardData(text: "${userViewModel.user!.code}"),
+                  );
+                },
               ),
             )
           ],

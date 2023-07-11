@@ -6,7 +6,9 @@ import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
 import 'package:holocare/ui/components/appbar/holocare_app_bar.dart';
 import 'package:holocare/ui/components/button/holocare_button.dart';
+import 'package:holocare/ui/components/dialog/holocare_dialog.dart';
 import 'package:holocare/ui/components/text_field/holocare_pin_code_field.dart';
+import 'package:holocare/ui/vm/root_view_model.dart';
 import 'package:holocare/ui/vm/user_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -18,6 +20,7 @@ class RootProtectorPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(holocareThemeProvider);
     final userViewModel = ref.watch(userViewModelProvider);
+    final rootViewModel = ref.watch(rootViewModelProvider);
     final router = useRouter();
 
     return Scaffold(
@@ -40,7 +43,7 @@ class RootProtectorPage extends HookConsumerWidget {
                         children: [
                           Text(
                             "코드를 입력해주세요",
-                            style: theme.textTheme.h24.bold().title(),
+                            style: theme.textTheme.h22.bold().title(),
                           ),
                           const Gap(24),
                           Text(
@@ -54,13 +57,15 @@ class RootProtectorPage extends HookConsumerWidget {
                 ],
               ),
             ),
-            const Flexible(
+            Flexible(
               flex: 0,
               child: Column(
                 children: [
-                  Gap(60),
-                  HolocarePinCodeField(),
-                  Gap(60),
+                  const Gap(60),
+                  HolocarePinCodeField(
+                    onChanged: (value) => rootViewModel.changeCode(value),
+                  ),
+                  const Gap(60),
                 ],
               ),
             ),
@@ -68,7 +73,39 @@ class RootProtectorPage extends HookConsumerWidget {
               flex: 1,
               child: HolocareButton(
                 title: "연결하기",
-                onTap: () async {},
+                onTap: () async {
+                  if (!rootViewModel.isNotEmptyCode) {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (_) {
+                          return HolocareDialog(
+                            title: "코드를 입력해주세요",
+                            content: "코드를 입력하여 다음 스텝으로\n넘어갈 수 있습니다",
+                            button: "확인",
+                            action: () {
+                              router.pop();
+                            },
+                          );
+                        });
+                    return;
+                  }
+                  showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (_) {
+                        return HolocareDialog(
+                          title: "연결에 성공하였습니다",
+                          content: "보호자가 코드를 입력하여\n연결되었습니다",
+                          button: "확인",
+                          action: () {
+                            router.pop();
+                          },
+                        );
+                      });
+                  // await userViewModel
+                  //     .getProtectorsByCode(int.parse(rootViewModel.code));
+                },
               ),
             )
           ],

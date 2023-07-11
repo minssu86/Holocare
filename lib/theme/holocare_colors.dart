@@ -8,10 +8,12 @@ class HolocareColors {
     required this.success,
     required this.warning,
     required this.warningSecondary,
-    required this.grayscale_100,
-    required this.grayscale_50,
-    required this.grayscale_25,
-    required this.grayscale_00,
+    required this.white,
+    required this.grayscale_05,
+    required this.grayscale_04,
+    required this.grayscale_03,
+    required this.grayscale_02,
+    required this.grayscale_01,
   });
 
   factory HolocareColors() {
@@ -21,10 +23,12 @@ class HolocareColors {
       success: HColor.success,
       warning: HColor.warning,
       warningSecondary: HColor.warningSecondary,
-      grayscale_100: HColor.grayscale_100,
-      grayscale_50: HColor.grayscale_50,
-      grayscale_25: HColor.grayscale_25,
-      grayscale_00: HColor.grayscale_00,
+      white: HColor.white,
+      grayscale_05: HColor.grayscale_05,
+      grayscale_04: HColor.grayscale_04,
+      grayscale_03: HColor.grayscale_03,
+      grayscale_02: HColor.grayscale_02,
+      grayscale_01: HColor.grayscale_01,
     );
   }
 
@@ -33,8 +37,10 @@ class HolocareColors {
   final Color success;
   final Color warning;
   final Color warningSecondary;
-  final Color grayscale_100;
-  final Color grayscale_50;
-  final Color grayscale_25;
-  final Color grayscale_00;
+  final Color white;
+  final Color grayscale_05;
+  final Color grayscale_04;
+  final Color grayscale_03;
+  final Color grayscale_02;
+  final Color grayscale_01;
 }

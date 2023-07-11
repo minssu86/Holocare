@@ -16,17 +16,17 @@ class DashBoardAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
     return AppBar(
       elevation: 0,
-      backgroundColor: theme.appColors.grayscale_00,
+      backgroundColor: theme.appColors.white,
       leading: IconButton(
         iconSize: 24,
-        color: theme.appColors.grayscale_100,
+        color: theme.appColors.grayscale_01,
         icon: const Icon(Icons.logo_dev_rounded),
         onPressed: () {},
       ),
       actions: [
         IconButton(
           iconSize: 24,
-          color: theme.appColors.grayscale_100,
+          color: theme.appColors.grayscale_01,
           icon: const Icon(Icons.settings_rounded),
           onPressed: () {},
         ),

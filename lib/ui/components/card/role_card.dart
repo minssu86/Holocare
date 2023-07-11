@@ -24,11 +24,11 @@ class RoleCard extends ConsumerWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: theme.appColors.grayscale_25,
+          color: theme.appColors.white,
           border: Border.all(
             width: 2,
             color:
-                active ? theme.appColors.primary : theme.appColors.grayscale_50,
+                active ? theme.appColors.primary : theme.appColors.grayscale_04,
           ),
           borderRadius: BorderRadius.circular(8),
         ),
@@ -46,11 +46,11 @@ class RoleCard extends ConsumerWidget {
                   children: [
                     Text(
                       title,
-                      style: theme.textTheme.h16.bold(),
+                      style: theme.textTheme.b17.bold(),
                     ),
                     Text(
                       description,
-                      style: theme.textTheme.h16.description(),
+                      style: theme.textTheme.b14.description(),
                     ),
                   ],
                 ),

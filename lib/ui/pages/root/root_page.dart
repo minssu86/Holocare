@@ -38,7 +38,7 @@ class RootPage extends HookConsumerWidget {
                         children: [
                           Text(
                             "역할을 선택해주세요",
-                            style: theme.textTheme.h24.bold().title(),
+                            style: theme.textTheme.h22.bold().title(),
                           ),
                           const Gap(24),
                           Text(

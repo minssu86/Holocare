@@ -30,7 +30,7 @@ class HolocareButton extends ConsumerWidget {
             children: [
               Text(
                 title,
-                style: theme.textTheme.h16.white().bold(),
+                style: theme.textTheme.b17.white().bold(),
               ),
             ],
           ),

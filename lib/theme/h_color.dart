@@ -11,11 +11,15 @@ class HColor {
 
   static const Color warningSecondary = Color(0xFFFDDDDD);
 
-  static const Color grayscale_100 = Color(0xFF000000);
+  static const Color grayscale_05 = Color(0xFFF5F4F3);
 
-  static const Color grayscale_50 = Color(0xFF8C8C8C);
+  static const Color grayscale_04 = Color(0xFFDFDFDF);
 
-  static const Color grayscale_25 = Color(0xFFF1F1F1);
+  static const Color grayscale_03 = Color(0xFF8B8B8B);
 
-  static const Color grayscale_00 = Color(0xFFFFFFFF);
+  static const Color grayscale_02 = Color(0xFF3D3D3D);
+
+  static const Color grayscale_01 = Color(0xFF171717);
+
+  static const Color white = Color(0xFFFFFFFF);
 }

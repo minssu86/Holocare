@@ -33,7 +33,7 @@ class HolocareDialog extends ConsumerWidget {
         children: [
           Text(
             title,
-            style: theme.textTheme.h16.title().bold(),
+            style: theme.textTheme.b17.title().bold(),
           ),
         ],
       ),

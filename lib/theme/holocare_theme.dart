@@ -15,7 +15,7 @@ class HolocareTheme {
   factory HolocareTheme() {
     final holocareColors = HolocareColors();
     final themeData = ThemeData(
-      scaffoldBackgroundColor: holocareColors.grayscale_00,
+      scaffoldBackgroundColor: holocareColors.white,
     );
     final holocareText = HolocareText();
 
