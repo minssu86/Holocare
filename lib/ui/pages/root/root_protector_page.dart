@@ -113,13 +113,15 @@ class RootProtectorPage extends HookConsumerWidget {
                       } else {
                         showDialog(
                           context: context,
-                          barrierDismissible: true,
+                          barrierDismissible: false,
                           builder: (_) {
                             return HolocareDialog(
                               title: "연결에 성공하였습니다",
                               content: "보호자가 코드를 입력하여\n연결되었습니다",
                               button: "확인",
-                              action: () {
+                              action: () async {
+                                await userViewModel
+                                    .updateCode(int.parse(rootViewModel.code));
                                 router.pop();
                                 router.push(const DashboardRoute());
                               },
@@ -129,8 +131,6 @@ class RootProtectorPage extends HookConsumerWidget {
                       }
                     },
                   );
-                  // await userViewModel
-                  //     .getProtectorsByCode(int.parse(rootViewModel.code));
                 },
               ),
             )
