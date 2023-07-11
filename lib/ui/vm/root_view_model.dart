@@ -10,6 +10,8 @@ class RootViewModel extends ChangeNotifier {
 
   get code => _code;
 
+  bool get isNotEmptyCode => _code != null && _code?.length == 7;
+
   void changeCode(pin) {
     _code = pin;
     notifyListeners();

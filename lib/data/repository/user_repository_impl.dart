@@ -77,6 +77,7 @@ class UserRepositoryImpl implements UserRepository {
           whereNotIn: whereNotIn,
           isNull: isNull,
         )
-        .then((value) => value.docs.map((e) => e.data()).toList());
+        .then(
+            (value) => value.docs.map((e) => User.fromJson(e.data())).toList());
   }
 }

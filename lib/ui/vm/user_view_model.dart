@@ -19,21 +19,66 @@ class UserViewModel extends ChangeNotifier {
   late final UseCases _useCases = _reader(useCasesProvider);
 
   User? _user;
+  final List<User> _members = [];
 
   User? get user => _user;
 
+  List<User> get members => _members;
+
   bool get isVerified => _user != null;
 
+  bool get isExistProtectorMember =>
+      _members.where((member) => member.role == Role.protector.role).isNotEmpty;
+
+  bool get isExistProtegeMember =>
+      _members.where((member) => member.role == Role.protege.role).isNotEmpty;
+
   Future<void> updateRole(Role role) async {
-    await _useCases.createLocalUser(
+    await _updateLocalUser(
       User(
-        uuid: const Uuid().v4(),
         role: role.role,
-        verified: "true",
-        code: Utils.generateCode(),
+        uuid: const Uuid().v4(),
+        verified: false,
+        pause: false,
+        code: Role.protege.role == role.role ? Utils.generateCode() : null,
       ),
     );
-    await _getLocalUser();
+  }
+
+  Future<void> updateCode(int code) async {
+    if (user == null) return;
+    await _useCases.updateUser(user!.uuid, {"code": code});
+    await _updateLocalUser(
+      User(
+        role: user!.role,
+        uuid: user!.uuid,
+        verified: true,
+        pause: false,
+        code: code,
+      ),
+    );
+  }
+
+  Future<void> createUser() async {
+    if (user == null) return;
+    await _useCases.createUser(user!);
+  }
+
+  Future<void> deleteUser() async {
+    if (_user == null) return;
+    await _useCases.deleteUser(user!.uuid).then((_) {
+      _user = null;
+      notifyListeners();
+    });
+  }
+
+  Future<void> getUsersByCode(int code) async {
+    await _useCases.queryUser(field: "code", isEqualTo: code).then((value) {
+      value.forEach((member) {
+        _members.add(member);
+      });
+      notifyListeners();
+    });
   }
 
   Future<User?> _getLocalUser() async {
@@ -44,7 +89,8 @@ class UserViewModel extends ChangeNotifier {
     });
   }
 
-  Future<void> _createLocalUser(User user) async {
-    print(user);
+  Future<void> _updateLocalUser(User user) async {
+    await _useCases.createLocalUser(user);
+    await _getLocalUser();
   }
 }
