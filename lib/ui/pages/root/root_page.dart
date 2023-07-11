@@ -58,7 +58,7 @@ class RootPage extends HookConsumerWidget {
                 children: [
                   const Gap(60),
                   RoleCard(
-                    title: "보호자",
+                    title: "보호 대상자 / 피보호자",
                     description: "보호자는 보호대상자의 활동이 감지되지 않으면 알림을 받습니다",
                     active: userViewModel.user?.role == Role.protege.role,
                     onTap: () async {
