@@ -6,6 +6,9 @@ class HolocareColors {
     required this.primary,
     required this.primarySecondary,
     required this.success,
+    required this.successSecondary,
+    required this.caution,
+    required this.cautionSecondary,
     required this.warning,
     required this.warningSecondary,
     required this.white,
@@ -21,6 +24,9 @@ class HolocareColors {
       primary: HColor.primary,
       primarySecondary: HColor.primarySecondary,
       success: HColor.success,
+      successSecondary: HColor.successSecondary,
+      caution: HColor.caution,
+      cautionSecondary: HColor.cautionSecondary,
       warning: HColor.warning,
       warningSecondary: HColor.warningSecondary,
       white: HColor.white,
@@ -35,6 +41,9 @@ class HolocareColors {
   final Color primary;
   final Color primarySecondary;
   final Color success;
+  final Color successSecondary;
+  final Color caution;
+  final Color cautionSecondary;
   final Color warning;
   final Color warningSecondary;
   final Color white;

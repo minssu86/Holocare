@@ -5,7 +5,13 @@ class HColor {
 
   static const Color primarySecondary = Color(0xFFF6F1FC);
 
-  static const Color success = Color(0xFF66BB6A);
+  static const Color success = Color(0xFF1AB46A);
+
+  static const Color successSecondary = Color(0xFFC5EAD8);
+
+  static const Color caution = Color(0xFFE79B0A);
+
+  static const Color cautionSecondary = Color(0xFFFFF0D9);
 
   static const Color warning = Color(0xFFDE2C2C);
 
