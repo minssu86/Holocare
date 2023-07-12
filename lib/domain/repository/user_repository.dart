@@ -9,7 +9,7 @@ abstract class UserRepository {
 
   Future<void> deleteFirestoreUser(String uuid);
 
-  Future<dynamic> query({
+  Future<List<User>> query({
     required Object field,
     Object? isEqualTo,
     Object? isNotEqualTo,

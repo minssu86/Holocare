@@ -32,7 +32,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<dynamic> getFirebstoreUser(String uuid) async {
     return await _firestoreHelper
         .get(collection: "users", doc: uuid)
-        .then((value) => value.data());
+        .then((value) => User.fromJson(value.data()!));
   }
 
   @override
@@ -47,7 +47,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future query({
+  Future<List<User>> query({
     required Object field,
     Object? isEqualTo,
     Object? isNotEqualTo,
