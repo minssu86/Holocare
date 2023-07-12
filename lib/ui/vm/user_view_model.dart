@@ -1,3 +1,4 @@
+import 'package:day/day.dart';
 import 'package:flutter/foundation.dart';
 import 'package:holocare/domain/model/user.dart';
 import 'package:holocare/domain/use_case/use_case.dart';
@@ -59,6 +60,13 @@ class UserViewModel extends ChangeNotifier {
     );
   }
 
+  Future<void> updateVisited() async {
+    if (user == null) return;
+    final now = Day.fromDateTime(DateTime.now()).format("YY.MM.DD HH:mm");
+    await _useCases.updateUser(user!.uuid, {"visited": now});
+    await getUsersByCode(user!.code!);
+  }
+
   Future<void> createUser() async {
     if (user == null) return;
     await _useCases.createUser(user!);
@@ -74,9 +82,10 @@ class UserViewModel extends ChangeNotifier {
 
   Future<void> getUsersByCode(int code) async {
     await _useCases.queryUser(field: "code", isEqualTo: code).then((value) {
-      value.forEach((member) {
+      _members.clear();
+      for (var member in value) {
         _members.add(member);
-      });
+      }
       notifyListeners();
     });
   }
