@@ -1,7 +1,4 @@
-import 'dart:js_interop';
-
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HolocareLabel extends ConsumerWidget {
@@ -36,13 +33,6 @@ class HolocareLabel extends ConsumerWidget {
           padding: padding,
           child: Row(
             children: [
-              if (icon.isDefinedAndNotNull)
-                Icon(
-                  icon,
-                  size: 16,
-                  color: color,
-                ),
-              if (icon.isDefinedAndNotNull) const Gap(4),
               Text(
                 text,
                 style: textStyle,
