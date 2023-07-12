@@ -21,5 +21,9 @@ class RootRouter extends $RootRouter {
           page: DashboardRoute.page,
           path: "/dashboard",
         ),
+        AutoRoute(
+          page: SettingRoute.page,
+          path: "/setting",
+        ),
       ];
 }
