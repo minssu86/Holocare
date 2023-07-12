@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => MemberBloc(memberRepository: MemberRepository()),
+        create: (context) => MemberBloc(),
         child: MaterialApp(
           title: 'HoloCare',
           theme: ThemeData(

@@ -1,20 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
 
 import 'dart:async';
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:holocare/src/blocs/member/member_bloc.dart';
-import 'package:holocare/src/blocs/member/member_event.dart';
 import 'package:holocare/src/blocs/member/member_state.dart';
 import 'package:holocare/src/service/device_service.dart';
 import 'package:holocare/src/ui/screen/choice_page.dart';
-import 'package:holocare/src/ui/screen/protected/protected_home_page.dart';
 import 'package:holocare/src/ui/screen/protected/protected_code_share_page.dart';
+import 'package:holocare/src/ui/screen/protected/protected_home_page.dart';
 import 'package:holocare/src/ui/screen/protector/protector_connect_request_page.dart';
 import 'package:holocare/src/ui/screen/protector/protector_main_page.dart';
 
@@ -34,15 +30,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    // MemberBloc memberBloc = BlocProvider.of<MemberBloc>(context);
-    //
-    // // Timer(Duration(seconds: 5), () async {
-    //   MemberService()
-    //       .getUserDeviceId()
-    //       .then((value) => userInfo = value).then((value) => userInfo = value);
-    // print(userInfo);
-    // memberBloc.add(FindMemberEvent());
-    // // });
     Timer(Duration(seconds: 5), () async {
       try {
         var deviceId = "";
@@ -50,11 +37,10 @@ class _SplashPageState extends State<SplashPage> {
             .getUserDeviceId()
             .then((value) => deviceId = value);
         print("splash result ==========");
-        var a = await memberCollection.collection("member").doc(deviceId).get();
+        var a = await memberCollection.collection("member").doc(deviceId.toString().substring(0,6)).get();
 
         //비회원
         if (!a.exists) {
-          print("empty");
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => ChoicePage(deviceId: deviceId)));
         } else {
@@ -70,7 +56,7 @@ class _SplashPageState extends State<SplashPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ProtectorConnectRequestPage()));
+                      builder: (context) => ProtectorConnectRequestPage(deviceId: deviceId,)));
             }
           } else {
             //보호 대상자

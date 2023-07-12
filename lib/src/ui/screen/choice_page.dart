@@ -60,7 +60,7 @@ class _ChoicePageState extends State<ChoicePage> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ProtectorConnectRequestPage()));
+              builder: (context) => ProtectorConnectRequestPage(deviceId: widget.deviceId,)));
     }
   }
 

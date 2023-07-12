@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:holocare/src/ui/screen/protector/protector_config_page.dart';
 
 class ProtectorMainPage extends StatefulWidget {
@@ -12,92 +13,98 @@ class _ProtectorMainPageState extends State<ProtectorMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 32),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  "홀로케어",
-                  style: TextStyle(
-                    color: Color(0xFF111111),
-                    fontSize: 24,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProtectorConfigPage()));
-                  },
-                  icon: Icon(Icons.settings),
-
-                )
-              ],
+        body: Center(
+      child: SizedBox(
+        width: 360,
+        height: 800,
+        child: Column(
+          children: [
+            const SizedBox(
+              width: 320,
+              height: 56,
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+            Container(
+              alignment: Alignment.centerRight,
+              width: double.infinity,
+              height: 24,
+              margin: EdgeInsets.only(bottom: 72),
+              child: SvgPicture.asset(
+                'assets/icons/config_icon.svg',
+                width: 24,
+                height: 24,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 28),
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '최근 접속 시간',
-                    style: TextStyle(
-                      color: Color(0xFF111111),
-                      fontSize: 40,
-                      fontFamily: 'SF Pro',
-                      fontWeight: FontWeight.w600,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "안전하게\n보호하고 있어요",
+                        style: TextStyle(
+                          color: Color(0xFF3D3D3D),
+                          fontSize: 28,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Text(
+                        "3시간 전에 활동을 확인 했어요",
+                        style: TextStyle(
+                          color: Color(0xFF8B8B8B),
+                          fontSize: 14,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    '6월 28일 오후 9시 25분',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w600,
-                      // height: 34,
+                  Container(
+                    width: 49,
+                    height: 33,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: ShapeDecoration(
+                      color: Color(0xFFC4E9D7),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '안전',
+                          style: TextStyle(
+                            color: Color(0xFF1AB369),
+                            fontSize: 12,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ],
-          ),
-          Container(
-            margin: const EdgeInsets.only(bottom: 118.5),
-            // width: 309,
-            // height: 73,
-            decoration: ShapeDecoration(
-              color: const Color(0xFFF2F2F2),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+            ),
+            Container(
+              child: SvgPicture.asset(
+                'assets/icons/three_image.svg',
+                // width: 320,
+                // height: 200,
               ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'AD',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
+            Text("최근 접속 23.7.05 13:05")
+          ],
+        ),
       ),
-    );
+    ));
   }
 }

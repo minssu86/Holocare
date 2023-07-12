@@ -7,7 +7,6 @@ import 'package:holocare/src/models/member.dart';
 import '../../repository/member_repo.dart';
 
 class MemberBloc extends Bloc<MemberEvent, MemberState> {
-  final MemberRepository memberRepository;
 
   // static MemberBloc? _instance;
   // static MemberBloc get instance {
@@ -15,9 +14,7 @@ class MemberBloc extends Bloc<MemberEvent, MemberState> {
   //   return _instance!;
   // }
 
-  MemberBloc({
-    required this.memberRepository,
-  }) : super(Empty()) {
+  MemberBloc() : super(Empty()) {
     on<FindMemberEvent>(
         (event, emit) => emit({_mapFindMemberEvent(event)} as MemberState));
     // on<CreateMemberEvent>((event, emit) => emit({
@@ -44,7 +41,7 @@ class MemberBloc extends Bloc<MemberEvent, MemberState> {
       yield Loading();
       print('aabbcascccccc');
 
-      await memberRepository.findMember();
+      // await memberRepository.findMember();
     } catch (e) {
       yield Error(message: e.toString());
     }
@@ -71,8 +68,8 @@ class MemberBloc extends Bloc<MemberEvent, MemberState> {
           connectCount: 0,
           status: "unconnected");
 
-      final res = await memberRepository.createMember(newMember);
-      yield Loaded(member: res!);
+      // final res = await memberRepository.createMember(newMember);
+      // yield Loaded(member: res!);
     } catch (e) {
       yield Error(message: e.toString());
     }
@@ -82,7 +79,7 @@ class MemberBloc extends Bloc<MemberEvent, MemberState> {
     try {
       yield Loading();
 
-      await memberRepository.updateMember(event.member);
+      // await memberRepository.updateMember(event.member);
     } catch (e) {
       yield Error(message: e.toString());
     }
