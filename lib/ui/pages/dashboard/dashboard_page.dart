@@ -2,10 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
+import 'package:holocare/hooks/use_router.dart';
 import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
 import 'package:holocare/ui/components/appbar/dashboard_app_bar.dart';
 import 'package:holocare/ui/components/label/holocare_label.dart';
+import 'package:holocare/ui/router/router.gr.dart';
 import 'package:holocare/ui/vm/dashboard_view_model.dart';
 import 'package:holocare/ui/vm/user_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,16 +19,21 @@ class DashboardPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(holocareThemeProvider);
-    final dashboardViewModel = ref.watch(dashboardViewModelProvider);
+    final router = useRouter();
     final userViewModel = ref.watch(userViewModelProvider);
+    final dashboardViewModel = ref.watch(dashboardViewModelProvider);
 
     useEffect(() {
-      dashboardViewModel.visiting(userViewModel.user!);
+      userViewModel
+          .updateVisited()
+          .then((_) => dashboardViewModel.visiting(userViewModel.members));
       return null;
-    });
+    }, []);
 
     return Scaffold(
-      appBar: DashBoardAppBar(),
+      appBar: DashBoardAppBar(
+        onPressedSetting: () => router.popAndPush(const SettingRoute()),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,

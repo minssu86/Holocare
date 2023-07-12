@@ -4,8 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class DashBoardAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final AppBar appBar = AppBar();
+  void Function()? onPressedSetting;
 
-  DashBoardAppBar({super.key, required});
+  DashBoardAppBar({super.key, this.onPressedSetting});
 
   @override
   Size get preferredSize => Size.fromHeight(appBar.preferredSize.height);
@@ -28,7 +29,7 @@ class DashBoardAppBar extends ConsumerWidget implements PreferredSizeWidget {
           iconSize: 24,
           color: theme.appColors.grayscale_01,
           icon: const Icon(Icons.settings_rounded),
-          onPressed: () {},
+          onPressed: onPressedSetting,
         ),
       ],
     );
