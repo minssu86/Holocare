@@ -12,8 +12,9 @@ import 'package:provider/provider.dart';
 class ProtectedCodeSharePage extends StatefulWidget {
   ProtectedCodeSharePage({
     Key? key,
+    required this.code,
   }) : super(key: key);
-
+  final code;
   @override
   State<ProtectedCodeSharePage> createState() => _ProtectedCodeSharePageState();
 }
@@ -51,7 +52,7 @@ class _ProtectedCodeSharePageState extends State<ProtectedCodeSharePage> {
                         fontWeight: FontWeight.w600,
                       )),
                 ),
-                Text(state.toString(),
+                Text(widget.code,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 24,

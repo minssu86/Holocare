@@ -14,7 +14,7 @@ import 'package:holocare/src/blocs/member/member_state.dart';
 import 'package:holocare/src/service/device_service.dart';
 import 'package:holocare/src/ui/screen/choice_page.dart';
 import 'package:holocare/src/ui/screen/protected/protected_home_page.dart';
-import 'package:holocare/src/ui/screen/protected/protected_page.dart';
+import 'package:holocare/src/ui/screen/protected/protected_code_share_page.dart';
 import 'package:holocare/src/ui/screen/protector/protector_connect_request_page.dart';
 import 'package:holocare/src/ui/screen/protector/protector_main_page.dart';
 
@@ -49,29 +49,14 @@ class _SplashPageState extends State<SplashPage> {
         await MemberService()
             .getUserDeviceId()
             .then((value) => deviceId = value);
-
-        // if (Platform.isIOS) {
-        //   print("ios");
-        //   final IosDeviceInfo iosData = await deviceInfoPlugin.iosInfo;
-        //   print(iosData.identifierForVendor);
-        //   deviceId = iosData.identifierForVendor;
-        // } else {
-        //   print("aos");
-        //   final AndroidDeviceInfo aosData = await deviceInfoPlugin.androidInfo;
-        //   print(aosData.androidId);
-        //   deviceId = aosData.androidId;
-        // }
-        // memberRepository.checkMember(deviceId);
         print("splash result ==========");
         var a = await memberCollection.collection("member").doc(deviceId).get();
-
-
 
         //비회원
         if (!a.exists) {
           print("empty");
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ChoicePage()));
+              context, MaterialPageRoute(builder: (context) => ChoicePage(deviceId: deviceId)));
         } else {
           Member m = Member.fromJson(a.data()! as Map<String, dynamic>);
           print(m.toString());
@@ -96,7 +81,7 @@ class _SplashPageState extends State<SplashPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ProtectedCodeSharePage()));
+                      builder: (context) => ProtectedCodeSharePage( code: m.code,)));
             }
           }
         }

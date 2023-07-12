@@ -72,7 +72,7 @@ class MemberBloc extends Bloc<MemberEvent, MemberState> {
           status: "unconnected");
 
       final res = await memberRepository.createMember(newMember);
-      yield Loaded(member: res);
+      yield Loaded(member: res!);
     } catch (e) {
       yield Error(message: e.toString());
     }
