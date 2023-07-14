@@ -15,7 +15,7 @@ class MemberStreamUserUseCase {
 
   late final StreamRepository repository = _reader(streamRepositoryProvider);
 
-  Stream<Future<QuerySnapshot<Map<String, dynamic>>>> call(int code) async* {
-    yield* repository.memberstream(code);
+  Stream<QuerySnapshot<Map<String, dynamic>>> call(int code) {
+    return repository.memberstream(code);
   }
 }

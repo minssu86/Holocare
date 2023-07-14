@@ -82,4 +82,38 @@ class FirestoreHelper {
   }) async {
     await _firestore.collection(collection).doc(doc).delete();
   }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> stream({
+    required String collection,
+    required Object field,
+    Object? isEqualTo,
+    Object? isNotEqualTo,
+    Object? isLessThan,
+    Object? isLessThanOrEqualTo,
+    Object? isGreaterThan,
+    Object? isGreaterThanOrEqualTo,
+    Object? arrayContains,
+    Iterable<Object?>? arrayContainsAny,
+    Iterable<Object?>? whereIn,
+    Iterable<Object?>? whereNotIn,
+    bool? isNull,
+  }) {
+    return _firestore
+        .collection(collection)
+        .where(
+          field,
+          isEqualTo: isEqualTo,
+          isNotEqualTo: isNotEqualTo,
+          isLessThan: isLessThan,
+          isLessThanOrEqualTo: isLessThanOrEqualTo,
+          isGreaterThan: isGreaterThan,
+          isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+          arrayContains: arrayContains,
+          arrayContainsAny: arrayContainsAny,
+          whereIn: whereIn,
+          whereNotIn: whereNotIn,
+          isNull: isNull,
+        )
+        .snapshots();
+  }
 }

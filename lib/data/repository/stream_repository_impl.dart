@@ -15,11 +15,8 @@ class StreamRepositoryImpl extends StreamRepository {
       _reader(firestoreHelperProvider);
 
   @override
-  Stream<Future<QuerySnapshot<Map<String, dynamic>>>> memberstream(
-      int code) async* {
-    yield* Stream.periodic(const Duration(seconds: 5), (_) {
-      return _firestoreHelper.query(
-          collection: "users", field: "code", isEqualTo: code);
-    });
+  Stream<QuerySnapshot<Map<String, dynamic>>> memberstream(int code) {
+    return _firestoreHelper.stream(
+        collection: "users", field: "code", isEqualTo: code);
   }
 }

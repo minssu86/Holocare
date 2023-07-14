@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:day/day.dart';
 import 'package:flutter/foundation.dart';
 import 'package:holocare/domain/model/user.dart';
@@ -20,8 +23,7 @@ class UserViewModel extends ChangeNotifier {
   late final UseCases _useCases = _reader(useCasesProvider);
 
   User? _user;
-  final List<User> _members = [];
-
+  List<User> _members = [];
   User? get user => _user;
 
   List<User> get members => _members;
@@ -33,6 +35,17 @@ class UserViewModel extends ChangeNotifier {
 
   bool get isExistProtegeMember =>
       _members.where((member) => member.role == Role.protege.role).isNotEmpty;
+
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? memberstream(
+      int? code) {
+    if (code == null) return null;
+    return _useCases.memberstream(code).listen((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        _members = snapshot.docs.map((e) => User.fromJson(e.data())).toList();
+        notifyListeners();
+      }
+    });
+  }
 
   Future<void> updateRole(Role role) async {
     await _updateLocalUser(
@@ -62,7 +75,7 @@ class UserViewModel extends ChangeNotifier {
 
   Future<void> updateVisited() async {
     if (user == null) return;
-    final now = Day.fromDateTime(DateTime.now()).format("YY.MM.DD HH:mm");
+    final now = Day.fromDateTime(DateTime.now()).format("YYYY.MM.DD HH:mm");
     await _useCases.updateUser(user!.uuid, {"visited": now});
     await getUsersByCode(user!.code!);
   }

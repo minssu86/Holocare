@@ -4,9 +4,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
-import 'package:holocare/domain/model/user.dart';
-import 'package:holocare/domain/use_case/member_stream_use_case.dart';
+import 'package:holocare/foundation/constants.dart';
 import 'package:holocare/hooks/use_router.dart';
 import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
@@ -23,35 +23,22 @@ class RootProtegePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(holocareThemeProvider);
-    final userViewModel = ref.watch(userViewModelProvider);
-    final memberstream = ref.watch(memberStreamUserUseCaseProvider);
     final router = useRouter();
+    final userViewModel = ref.watch(userViewModelProvider);
+    late final StreamSubscription<QuerySnapshot<Map<String, dynamic>>>?
+        memberstreamSub;
 
-    /**
-     * @todo
-     * stream 구독 로직 뷰에서 분리
-     */
+    useEffect(() {
+      memberstreamSub = userViewModel.memberstream(userViewModel.user?.code);
+      return memberstreamSub?.cancel;
+    }, []);
 
-    late final StreamSubscription<Future<QuerySnapshot<Map<String, dynamic>>>>
-        subscription;
-
-    memberstream.whenData(
-      (member) {
-        subscription = member(userViewModel.user!.code!).listen(
-          (event) {
-            event.then(
-              (value) {
-                if (value.docs.map((e) => User.fromJson(e.data())).length >=
-                    2) {
-                  subscription.cancel();
-                  router.replace(const DashboardRoute());
-                }
-              },
-            );
-          },
-        );
-      },
-    );
+    useEffect(() {
+      if (userViewModel.members
+          .where((element) => element.role == Role.protector.role)
+          .isNotEmpty) router.push(const DashboardRoute());
+      return null;
+    }, [userViewModel.members]);
 
     return Scaffold(
       appBar: HolocareAppBar(
