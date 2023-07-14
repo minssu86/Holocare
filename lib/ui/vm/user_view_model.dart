@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:day/day.dart';
 import 'package:flutter/foundation.dart';
 import 'package:holocare/domain/model/user.dart';
 import 'package:holocare/domain/use_case/use_case.dart';
@@ -75,8 +74,8 @@ class UserViewModel extends ChangeNotifier {
 
   Future<void> updateVisited() async {
     if (user == null) return;
-    final now = Day.fromDateTime(DateTime.now()).format("YYYY.MM.DD HH:mm");
-    await _useCases.updateUser(user!.uuid, {"visited": now});
+    final now = DateTime.now().toString();
+    await _useCases.updateUser(user!.uuid, {"visitedAt": now});
     await getUsersByCode(user!.code!);
   }
 
@@ -95,10 +94,7 @@ class UserViewModel extends ChangeNotifier {
 
   Future<void> getUsersByCode(int code) async {
     await _useCases.queryUser(field: "code", isEqualTo: code).then((value) {
-      _members.clear();
-      for (var member in value) {
-        _members.add(member);
-      }
+      _members = [...value];
       notifyListeners();
     });
   }

@@ -11,7 +11,7 @@ class User with _$User {
     required bool verified,
     required bool pause,
     int? code,
-    String? visited,
+    String? visitedAt,
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);

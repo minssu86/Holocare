@@ -1,3 +1,4 @@
+import 'package:day/day.dart';
 import 'package:flutter/material.dart';
 import 'package:holocare/domain/model/user.dart';
 import 'package:holocare/domain/use_case/use_case.dart';
@@ -13,7 +14,8 @@ class DashboardViewModel extends ChangeNotifier {
 
   DashboardViewModel(this._reader);
 
-  String _visited = "";
+  String hour = "";
+  final String _visited = "";
   final ActiveLevelType _activeLevelType = const ActiveLevelType.success();
 
   String get visited => _visited;
@@ -21,15 +23,15 @@ class DashboardViewModel extends ChangeNotifier {
   late final UseCases _useCases = _reader(useCasesProvider);
 
   void visiting(List<User> members) async {
-    final protege =
-        members.where((member) => member.role == Role.protege.role).first;
-    if (protege.visited == null) {
-      _visited = "존재하지 않습니다";
-    } else {
-      _visited = protege.visited!;
-    }
     notifyListeners();
   }
 
   void detectActiveLevelType() {}
+
+  void _subtrackDate(String date) {
+    print("date : $date");
+    final prevMs =
+        Day.fromString(date).diff(Day.fromDateTime(DateTime.now()), "h");
+    print("here : $prevMs");
+  }
 }
