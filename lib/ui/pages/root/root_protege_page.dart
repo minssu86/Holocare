@@ -30,13 +30,13 @@ class RootProtegePage extends HookConsumerWidget {
 
     useEffect(() {
       memberstreamSub = userViewModel.memberstream(userViewModel.user?.code);
-      return memberstreamSub?.cancel;
+      return () => memberstreamSub?.cancel();
     }, []);
 
     useEffect(() {
       if (userViewModel.members
           .where((element) => element.role == Role.protector.role)
-          .isNotEmpty) router.push(const DashboardRoute());
+          .isNotEmpty) router.replace(const DashboardRoute());
       return null;
     }, [userViewModel.members]);
 

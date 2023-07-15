@@ -76,7 +76,6 @@ class UserViewModel extends ChangeNotifier {
     if (user == null) return;
     final now = DateTime.now().toString();
     await _useCases.updateUser(user!.uuid, {"visitedAt": now});
-    await getUsersByCode(user!.code!);
   }
 
   Future<void> createUser() async {

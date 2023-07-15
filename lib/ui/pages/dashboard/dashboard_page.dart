@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
@@ -22,13 +25,23 @@ class DashboardPage extends HookConsumerWidget {
     final router = useRouter();
     final userViewModel = ref.watch(userViewModelProvider);
     final dashboardViewModel = ref.watch(dashboardViewModelProvider);
+    late final StreamSubscription<QuerySnapshot<Map<String, dynamic>>>?
+        memberstreamSub;
 
     useEffect(() {
-      userViewModel
-          .updateVisited()
-          .then((_) => dashboardViewModel.visiting(userViewModel.members));
+      userViewModel.updateVisited();
       return null;
     }, []);
+
+    useEffect(() {
+      memberstreamSub = userViewModel.memberstream(userViewModel.user?.code);
+      return () => memberstreamSub?.cancel();
+    }, []);
+
+    useEffect(() {
+      dashboardViewModel.visiting(userViewModel.members);
+      return null;
+    }, [userViewModel.members]);
 
     return Scaffold(
       appBar: DashBoardAppBar(
@@ -56,7 +69,7 @@ class DashboardPage extends HookConsumerWidget {
                       ),
                       const Gap(16),
                       Text(
-                        "3시간 전에 활동을 확인했어요",
+                        "${dashboardViewModel.diff}시간 전에 활동을 확인했어요",
                         style: theme.textTheme.b14.description(),
                       ),
                     ],

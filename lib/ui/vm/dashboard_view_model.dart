@@ -15,23 +15,30 @@ class DashboardViewModel extends ChangeNotifier {
   DashboardViewModel(this._reader);
 
   String hour = "";
-  final String _visited = "";
+  String _visitedAt = "";
+  String _diff = "0";
+
   final ActiveLevelType _activeLevelType = const ActiveLevelType.success();
 
-  String get visited => _visited;
+  String get visited => _visitedAt;
+  String get diff => _diff;
 
   late final UseCases _useCases = _reader(useCasesProvider);
 
   void visiting(List<User> members) async {
+    final protege =
+        members.where((member) => member.role == Role.protege.role).first;
+    if (protege.visitedAt != null) {
+      _visitedAt = Day.fromString(protege.visitedAt!).format("YY.MM.DD HH:mm");
+      _diff = DateTime.parse(protege.visitedAt!)
+          .difference(DateTime.now())
+          .inHours
+          .toString();
+    }
     notifyListeners();
   }
 
   void detectActiveLevelType() {}
 
-  void _subtrackDate(String date) {
-    print("date : $date");
-    final prevMs =
-        Day.fromString(date).diff(Day.fromDateTime(DateTime.now()), "h");
-    print("here : $prevMs");
-  }
+  void _subtrackDate(String date) {}
 }
