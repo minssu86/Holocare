@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:holocare/domain/model/user.dart';
 import 'package:holocare/domain/use_case/use_case.dart';
 import 'package:holocare/foundation/constants.dart';
-import 'package:holocare/foundation/type/active_level_type.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final dashboardViewModelProvider =
@@ -18,7 +17,7 @@ class DashboardViewModel extends ChangeNotifier {
   String _visitedAt = "";
   String _diff = "0";
 
-  final ActiveLevelType _activeLevelType = const ActiveLevelType.success();
+  // final ActiveLevelType _activeLevelType = const ActiveLevelType.success();
 
   String get visited => _visitedAt;
   String get diff => _diff;
@@ -26,6 +25,7 @@ class DashboardViewModel extends ChangeNotifier {
   late final UseCases _useCases = _reader(useCasesProvider);
 
   void visiting(List<User> members) async {
+    if (members.isEmpty) return;
     final protege =
         members.where((member) => member.role == Role.protege.role).first;
     if (protege.visitedAt != null) {
@@ -40,5 +40,5 @@ class DashboardViewModel extends ChangeNotifier {
 
   void detectActiveLevelType() {}
 
-  void _subtrackDate(String date) {}
+  // void _subtrackDate(String date) {}
 }

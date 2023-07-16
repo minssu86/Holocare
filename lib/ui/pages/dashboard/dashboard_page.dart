@@ -10,7 +10,6 @@ import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
 import 'package:holocare/ui/components/appbar/dashboard_app_bar.dart';
 import 'package:holocare/ui/components/label/holocare_label.dart';
-import 'package:holocare/ui/router/router.gr.dart';
 import 'package:holocare/ui/vm/dashboard_view_model.dart';
 import 'package:holocare/ui/vm/user_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -44,9 +43,7 @@ class DashboardPage extends HookConsumerWidget {
     }, [userViewModel.members]);
 
     return Scaffold(
-      appBar: DashBoardAppBar(
-        onPressedSetting: () => router.popAndPush(const SettingRoute()),
-      ),
+      appBar: DashBoardAppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,

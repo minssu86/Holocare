@@ -9,6 +9,7 @@ import 'package:holocare/ui/components/button/holocare_button.dart';
 import 'package:holocare/ui/components/card/role_card.dart';
 import 'package:holocare/ui/components/dialog/holocare_dialog.dart';
 import 'package:holocare/ui/router/router.gr.dart';
+import 'package:holocare/ui/vm/root_view_model.dart';
 import 'package:holocare/ui/vm/user_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -18,9 +19,10 @@ class RootPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final router = useRouter();
     final theme = ref.watch(holocareThemeProvider);
     final userViewModel = ref.watch(userViewModelProvider);
-    final router = useRouter();
+    final rootViewModel = ref.watch(rootViewModelProvider);
 
     return Scaffold(
       body: Padding(
@@ -60,19 +62,15 @@ class RootPage extends HookConsumerWidget {
                   RoleCard(
                     title: "보호 대상자 / 피보호자",
                     description: "보호자는 보호대상자의 활동이 감지되지 않으면 알림을 받습니다",
-                    active: userViewModel.user?.role == Role.protege.role,
-                    onTap: () async {
-                      await userViewModel.updateRole(Role.protege);
-                    },
+                    active: rootViewModel.isProtege,
+                    onTap: () => rootViewModel.changeRole(Role.protege),
                   ),
                   const Gap(12),
                   RoleCard(
                     title: "보호자",
                     description: "보호자는 보호대상자의 활동이 감지되지 않으면 알림을 받습니다",
-                    active: userViewModel.user?.role == Role.protector.role,
-                    onTap: () async {
-                      await userViewModel.updateRole(Role.protector);
-                    },
+                    active: rootViewModel.isProtector,
+                    onTap: () => rootViewModel.changeRole(Role.protector),
                   ),
                   const Gap(60),
                 ],
@@ -83,7 +81,7 @@ class RootPage extends HookConsumerWidget {
               child: HolocareButton(
                 title: "다음",
                 onTap: () {
-                  if (userViewModel.user == null) {
+                  if (rootViewModel.role == null) {
                     showDialog(
                         context: context,
                         builder: (_) {
@@ -97,8 +95,8 @@ class RootPage extends HookConsumerWidget {
                           );
                         });
                   }
-                  userViewModel.createUser().then((_) {
-                    if (userViewModel.user!.role == Role.protege.role) {
+                  userViewModel.createUser(rootViewModel.role!).then((_) {
+                    if (rootViewModel.role == Role.protege) {
                       router.push(const RootProtegeRoute());
                     } else {
                       router.push(const RootProtectorRoute());

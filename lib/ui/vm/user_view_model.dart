@@ -15,23 +15,18 @@ final userViewModelProvider =
 class UserViewModel extends ChangeNotifier {
   final dynamic _reader;
 
-  UserViewModel(this._reader) {
-    _getLocalUser();
-  }
+  UserViewModel(this._reader);
 
   late final UseCases _useCases = _reader(useCasesProvider);
 
   User? _user;
   List<User> _members = [];
+
   User? get user => _user;
-
   List<User> get members => _members;
-
   bool get isVerified => _user != null;
-
   bool get isExistProtectorMember =>
       _members.where((member) => member.role == Role.protector.role).isNotEmpty;
-
   bool get isExistProtegeMember =>
       _members.where((member) => member.role == Role.protege.role).isNotEmpty;
 
@@ -46,30 +41,21 @@ class UserViewModel extends ChangeNotifier {
     });
   }
 
-  Future<void> updateRole(Role role) async {
-    await _updateLocalUser(
-      User(
-        role: role.role,
-        uuid: const Uuid().v4(),
-        verified: false,
-        pause: false,
-        code: Role.protege.role == role.role ? Utils.generateCode() : null,
-      ),
-    );
-  }
-
-  Future<void> updateCode(int code) async {
+  Future<void> verify(int? code) async {
     if (user == null) return;
-    await _useCases.updateUser(user!.uuid, {"code": code});
-    await _updateLocalUser(
-      User(
-        role: user!.role,
-        uuid: user!.uuid,
-        verified: true,
-        pause: false,
-        code: code,
-      ),
-    );
+    final verified = await _useCases.getStorage().then((value) {
+      value?.update("verified", (_) => true);
+      return value;
+    });
+    await _useCases.updateStorage(verified!);
+
+    if (code != null) {
+      await _useCases.updateUser(user!.uuid, {"verified": true, "code": code});
+    } else {
+      await _useCases.updateUser(user!.uuid, {"verified": true});
+    }
+
+    await syncUser();
   }
 
   Future<void> updateVisited() async {
@@ -78,9 +64,19 @@ class UserViewModel extends ChangeNotifier {
     await _useCases.updateUser(user!.uuid, {"visitedAt": now});
   }
 
-  Future<void> createUser() async {
-    if (user == null) return;
-    await _useCases.createUser(user!);
+  Future<void> createUser(Role role) async {
+    final user = User(
+      code: role.role == Role.protege.role ? Utils.generateCode() : null,
+      uuid: const Uuid().v4(),
+      role: role.role,
+      verified: false,
+      pause: false,
+    );
+    await _useCases.createUser(user).then((_) {
+      _user = user;
+      notifyListeners();
+    });
+    await _useCases.updateStorage({"uuid": user.uuid, "verified": false});
   }
 
   Future<void> deleteUser() async {
@@ -89,8 +85,10 @@ class UserViewModel extends ChangeNotifier {
       _user = null;
       notifyListeners();
     });
+    await _useCases.deleteStorage();
   }
 
+  // @deprecated
   Future<void> getUsersByCode(int code) async {
     await _useCases.queryUser(field: "code", isEqualTo: code).then((value) {
       _members = [...value];
@@ -98,16 +96,13 @@ class UserViewModel extends ChangeNotifier {
     });
   }
 
-  Future<User?> _getLocalUser() async {
-    return _useCases.getLocalUser().then((result) {
-      _user = result;
+  Future<void> syncUser() async {
+    final storage = await _useCases.getStorage();
+    if (storage != null && storage.containsKey('uuid')) {
+      final uuid = storage['uuid'];
+      final value = await _useCases.getUser(uuid);
+      _user = value;
       notifyListeners();
-      return result;
-    });
-  }
-
-  Future<void> _updateLocalUser(User user) async {
-    await _useCases.createLocalUser(user);
-    await _getLocalUser();
+    }
   }
 }

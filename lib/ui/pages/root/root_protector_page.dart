@@ -121,9 +121,8 @@ class RootProtectorPage extends HookConsumerWidget {
                               button: "확인",
                               action: () async {
                                 await userViewModel
-                                    .updateCode(int.parse(rootViewModel.code));
-                                router.pop();
-                                router.push(const DashboardRoute());
+                                    .verify(int.parse(rootViewModel.code));
+                                router.replace(const DashboardRoute());
                               },
                             );
                           },
