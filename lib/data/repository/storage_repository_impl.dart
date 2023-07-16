@@ -2,33 +2,28 @@ import 'dart:convert';
 
 import 'package:holocare/data/data_source/secure_storage_helper.dart';
 import 'package:holocare/domain/model/user.dart';
-import 'package:holocare/domain/repository/local_user_repository.dart';
+import 'package:holocare/domain/repository/storage_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final localUserRepositoryImpl =
-    Provider((ref) => LocalUserRepositoryImpl(ref.read));
+final storageRepositoryImpl =
+    Provider((ref) => StorageRepositoryImpl(ref.read));
 
-class LocalUserRepositoryImpl implements LocalUserRepository {
+class StorageRepositoryImpl implements StorageRepository {
   final dynamic _reader;
 
-  LocalUserRepositoryImpl(this._reader);
+  StorageRepositoryImpl(this._reader);
 
   late final SecureStorageHelper _secureStorageHelper =
       _reader(secureStorageHelperProvider);
 
   @override
-  Future<User?> getLocalUser() async {
+  Future<Map<String, dynamic>?> getStorage() async {
     return _secureStorageHelper.read("user").then((value) {
       if (value != null && value.isNotEmpty) {
-        return User.fromJson(jsonDecode(value));
+        return jsonDecode(value);
       }
       return null;
     });
-  }
-
-  @override
-  Future<void> createLocalUser(User user) async {
-    await _secureStorageHelper.write("user", jsonEncode(user));
   }
 
   @override
@@ -37,7 +32,12 @@ class LocalUserRepositoryImpl implements LocalUserRepository {
   }
 
   @override
-  Future<void> deleteLocalUser(String key) async {
+  Future<void> updateStorage(Map<String, dynamic> data) async {
+    await _secureStorageHelper.write("user", jsonEncode(data));
+  }
+
+  @override
+  Future<void> deleteStorage() async {
     await _secureStorageHelper.delete("user");
   }
 }

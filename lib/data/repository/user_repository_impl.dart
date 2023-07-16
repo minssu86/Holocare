@@ -30,9 +30,13 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<dynamic> getFirebstoreUser(String uuid) async {
-    return await _firestoreHelper
-        .get(collection: "users", doc: uuid)
-        .then((value) => User.fromJson(value.data()!));
+    return await _firestoreHelper.get(collection: "users", doc: uuid).then(
+      (value) {
+        final data = value.data();
+        if (data != null) return User.fromJson(value.data()!);
+        return null;
+      },
+    );
   }
 
   @override
