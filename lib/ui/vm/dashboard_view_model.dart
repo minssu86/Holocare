@@ -1,28 +1,22 @@
 import 'package:day/day.dart';
 import 'package:flutter/material.dart';
 import 'package:holocare/domain/model/user.dart';
-import 'package:holocare/domain/use_case/use_case.dart';
 import 'package:holocare/foundation/constants.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final dashboardViewModelProvider =
-    Provider((ref) => DashboardViewModel(ref.read));
+final dashboardViewModelProvider = Provider((_) => DashboardViewModel());
 
 class DashboardViewModel extends ChangeNotifier {
-  final dynamic _reader;
-
-  DashboardViewModel(this._reader);
+  DashboardViewModel();
 
   String hour = "";
   String _visitedAt = "";
   String _diff = "0";
-
-  // final ActiveLevelType _activeLevelType = const ActiveLevelType.success();
+  ActiveLevel _activeLevel = ActiveLevel.success;
 
   String get visited => _visitedAt;
   String get diff => _diff;
-
-  late final UseCases _useCases = _reader(useCasesProvider);
+  ActiveLevel get activeLevel => _activeLevel;
 
   void visiting(List<User> members) async {
     if (members.isEmpty) return;
@@ -33,12 +27,25 @@ class DashboardViewModel extends ChangeNotifier {
       _diff = DateTime.parse(protege.visitedAt!)
           .difference(DateTime.now())
           .inHours
+          .abs()
           .toString();
     }
+    _detectActiveLevelType(num.parse(_diff));
     notifyListeners();
   }
 
-  void detectActiveLevelType() {}
-
-  // void _subtrackDate(String date) {}
+  void _detectActiveLevelType(num diff) {
+    if (diff <= ActiveLevel.success.level) {
+      _activeLevel = ActiveLevel.success;
+    }
+    if (diff > ActiveLevel.success.level && diff <= ActiveLevel.caution.level) {
+      _activeLevel = ActiveLevel.caution;
+    }
+    if (diff >= ActiveLevel.warning.level) {
+      _activeLevel = ActiveLevel.warning;
+    }
+    if (diff == ActiveLevel.pause.level) {
+      _activeLevel = ActiveLevel.pause;
+    }
+  }
 }

@@ -61,7 +61,7 @@ class DashboardPage extends HookConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "안전하게\n보호하고 있어요",
+                        dashboardViewModel.activeLevel.title,
                         style: theme.textTheme.h28.title().bold(),
                       ),
                       const Gap(16),
@@ -72,9 +72,9 @@ class DashboardPage extends HookConsumerWidget {
                     ],
                   ),
                   HolocareLabel(
-                    text: "안전",
-                    background: theme.appColors.successSecondary,
-                    textStyle: theme.textTheme.b14.success().semiBold(),
+                    text: dashboardViewModel.activeLevel.text,
+                    background: dashboardViewModel.activeLevel.background,
+                    textStyle: dashboardViewModel.activeLevel.textStyle,
                   ),
                 ],
               ),
@@ -84,8 +84,9 @@ class DashboardPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     const Gap(28),
-                    const Image(
-                      image: AssetImage("assets/images/buddy_safety.png"),
+                    Image(
+                      image: AssetImage(
+                          "assets/images/${dashboardViewModel.activeLevel.image}"),
                       fit: BoxFit.fitWidth,
                     ),
                     const Gap(12),

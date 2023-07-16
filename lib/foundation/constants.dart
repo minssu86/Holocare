@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:holocare/theme/h_color.dart';
 
 @immutable
 class Constants {
@@ -61,4 +62,67 @@ enum Role {
   });
 
   final String role;
+}
+
+enum ActiveLevel {
+  success(
+    level: 11,
+    textStyle: TextStyle(
+      color: HColor.success,
+      fontWeight: FontWeight.w600,
+    ),
+    background: HColor.successSecondary,
+    text: "안전",
+    title: "안전하게\n보호하고 있어요",
+    image: "buddy_safety.png",
+  ),
+  caution(
+    level: 23,
+    textStyle: TextStyle(
+      color: HColor.caution,
+      fontWeight: FontWeight.w600,
+    ),
+    background: HColor.cautionSecondary,
+    text: "주의",
+    title: "주의가\n필요해요",
+    image: "buddy_caution.png",
+  ),
+  warning(
+    level: 24,
+    textStyle: TextStyle(
+      color: HColor.warning,
+      fontWeight: FontWeight.w600,
+    ),
+    background: HColor.warningSecondary,
+    text: "위험",
+    title: "위험할 수 있는\n상황이에요",
+    image: "buddy_warning.png",
+  ),
+  pause(
+    level: double.infinity,
+    textStyle: TextStyle(
+      color: HColor.grayscale_02,
+      fontWeight: FontWeight.w600,
+    ),
+    background: HColor.grayscale_04,
+    text: "보호 중지",
+    title: "보호가\n중지되었어요",
+    image: "buddy_pause.png",
+  );
+
+  const ActiveLevel({
+    required this.level,
+    required this.textStyle,
+    required this.background,
+    required this.title,
+    required this.text,
+    required this.image,
+  });
+
+  final num level;
+  final TextStyle textStyle;
+  final Color background;
+  final String title;
+  final String text;
+  final String image;
 }
