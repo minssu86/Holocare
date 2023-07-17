@@ -30,11 +30,11 @@ class DashboardViewModel extends ChangeNotifier {
           .abs()
           .toString();
     }
-    _detectActiveLevelType(num.parse(_diff));
+    changeActiveLevelType(num.parse(_diff));
     notifyListeners();
   }
 
-  void _detectActiveLevelType(num diff) {
+  void changeActiveLevelType(num diff) {
     if (diff <= ActiveLevel.success.level) {
       _activeLevel = ActiveLevel.success;
     }
