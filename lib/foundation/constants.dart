@@ -64,6 +64,11 @@ enum Role {
   final String role;
 }
 
+enum SettingItemType {
+  arrowBtn,
+  switchBtn;
+}
+
 enum ActiveLevel {
   success(
     level: 11,
