@@ -32,5 +32,13 @@ class RootRouter extends $RootRouter {
           page: SettingRoute.page,
           path: "/setting",
         ),
+        AutoRoute(
+          page: SettingEditRoute.page,
+          path: "/setting/edit",
+        ),
+        AutoRoute(
+          page: SettingResetRoute.page,
+          path: "/setting/reset",
+        ),
       ];
 }
