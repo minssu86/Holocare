@@ -28,9 +28,18 @@ class DashboardPage extends HookConsumerWidget {
     late final StreamSubscription<QuerySnapshot<Map<String, dynamic>>>?
         memberstreamSub;
 
+    ref.listen(userViewModelProvider, (prev, next) {
+      if (!next.isExistProtectorMember || !next.isExistProtegeMember) {
+        next.deleteUser().then((_) {
+          router.popUntilRoot();
+          router.push(const RootRoute());
+        });
+      }
+    });
+
     useEffect(() {
       userViewModel.updateVisited();
-      return null;
+      return;
     }, []);
 
     useEffect(() {
@@ -40,7 +49,7 @@ class DashboardPage extends HookConsumerWidget {
 
     useEffect(() {
       dashboardViewModel.visiting(userViewModel.members);
-      return null;
+      return;
     }, [userViewModel.members]);
 
     return Scaffold(

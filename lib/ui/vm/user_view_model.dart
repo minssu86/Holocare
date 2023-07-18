@@ -24,7 +24,6 @@ class UserViewModel extends ChangeNotifier {
 
   User? get user => _user;
   List<User> get members => _members;
-  bool get isVerified => _user != null;
   bool get isExistProtectorMember =>
       _members.where((member) => member.role == Role.protector.role).isNotEmpty;
   bool get isExistProtegeMember =>

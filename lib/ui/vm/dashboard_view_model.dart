@@ -20,11 +20,12 @@ class DashboardViewModel extends ChangeNotifier {
 
   void visiting(List<User> members) async {
     if (members.isEmpty) return;
-    final protege =
-        members.where((member) => member.role == Role.protege.role).first;
-    if (protege.visitedAt != null) {
-      _visitedAt = Day.fromString(protege.visitedAt!).format("YY.MM.DD HH:mm");
-      _diff = DateTime.parse(protege.visitedAt!)
+    final protege = members.where((member) => member.role == Role.protege.role);
+    if (protege.isEmpty) return;
+    final target = protege.first;
+    if (target.visitedAt != null) {
+      _visitedAt = Day.fromString(target.visitedAt!).format("YY.MM.DD HH:mm");
+      _diff = DateTime.parse(target.visitedAt!)
           .difference(DateTime.now())
           .inHours
           .abs()
