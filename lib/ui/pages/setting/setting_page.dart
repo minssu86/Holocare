@@ -51,7 +51,9 @@ class SettingPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     SettingItem(
-                      title: "보호자 등록",
+                      title: userViewModel.user!.role == Role.protege.role
+                          ? "보호자 등록"
+                          : "보호자 연결",
                       type: SettingItemType.arrowBtn,
                       onPressed: () => router.push(const SettingEditRoute()),
                     ),
