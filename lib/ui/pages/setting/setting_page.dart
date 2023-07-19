@@ -61,7 +61,7 @@ class SettingPage extends HookConsumerWidget {
                     SettingItem(
                       title: "푸시 알림",
                       description: "앱에 접속할 수 있도록 알림을 보냅니다.",
-                      condition: settingViewModel.pause,
+                      condition: false,
                       type: SettingItemType.switchBtn,
                     ),
                     const Gap(40),
