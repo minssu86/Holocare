@@ -15,7 +15,13 @@ class SettingPage extends StatelessWidget {
     UserProvider provider = Provider.of<UserProvider>(context);
     return Scaffold(
         backgroundColor: ColorStyles.white,
-        appBar: const MyAppBar(),
+        appBar: MyAppBar(
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.black,
+          ),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: provider.role == "protectee"
