@@ -51,7 +51,7 @@ class SettingPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     SettingItem(
-                      title: userViewModel.user!.role == Role.protege.role
+                      title: userViewModel.user?.role == Role.protege.role
                           ? "보호자 등록"
                           : "보호자 연결",
                       type: SettingItemType.arrowBtn,

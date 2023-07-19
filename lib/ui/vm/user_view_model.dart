@@ -79,9 +79,9 @@ class UserViewModel extends ChangeNotifier {
         .updateStorage({"uuid": user.uuid, "verified": false, "pause": false});
   }
 
-  Future<void> deleteUser() async {
+  Future<void> deleteUser({String? uuid}) async {
     if (_user == null) return;
-    await _useCases.deleteUser(user!.uuid).then((_) {
+    await _useCases.deleteUser(uuid ?? user!.uuid).then((_) {
       _user = null;
       notifyListeners();
     });

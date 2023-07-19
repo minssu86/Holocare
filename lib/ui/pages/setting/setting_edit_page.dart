@@ -23,7 +23,7 @@ class SettingEditPage extends HookConsumerWidget {
     final router = useRouter();
     final theme = ref.watch(holocareThemeProvider);
     final userViewModel = ref.watch(userViewModelProvider);
-    final protectos = userViewModel.members
+    final protectors = userViewModel.members
         .where((member) => member.role == Role.protector.role);
 
     return Scaffold(
@@ -96,7 +96,7 @@ class SettingEditPage extends HookConsumerWidget {
                           ),
                           const Gap(20),
                           for (int order = 1;
-                              order <= protectos.length;
+                              order <= protectors.length;
                               order++)
                             SettingEditItem(
                               title: "보호자 $order",
@@ -111,6 +111,10 @@ class SettingEditPage extends HookConsumerWidget {
                                           "삭제한 보호자 $order의 데이터는\n복구되지 않습니다.",
                                       button: "확인",
                                       action: () async {
+                                        final protector =
+                                            protectors.toList()[order - 1];
+                                        await userViewModel.deleteUser(
+                                            uuid: protector.uuid);
                                         router.pop();
                                       },
                                     );
