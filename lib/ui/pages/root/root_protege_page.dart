@@ -10,8 +10,8 @@ import 'package:holocare/foundation/constants.dart';
 import 'package:holocare/hooks/use_router.dart';
 import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
-import 'package:holocare/ui/components/appbar/holocare_app_bar.dart';
 import 'package:holocare/ui/components/button/holocare_button.dart';
+import 'package:holocare/ui/components/layout/holocare_layout.dart';
 import 'package:holocare/ui/router/router.gr.dart';
 import 'package:holocare/ui/vm/user_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -44,91 +44,65 @@ class RootProtegePage extends HookConsumerWidget {
       return null;
     }, [userViewModel.members]);
 
-    return Scaffold(
-      appBar: HolocareAppBar(
-        onPressed: () async =>
-            await userViewModel.deleteUser().then((_) => router.pop()),
+    return HolocareLayout(
+      leading: true,
+      onPressedAppbar: () async =>
+          await userViewModel.deleteUser().then((_) => router.pop()),
+      title: Text(
+        "보호자에게 코드를\n공유해주세요",
+        style: theme.textTheme.h22.bold().title(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 60,
-        ),
-        child: Column(
-          children: [
-            Flexible(
-              flex: 0,
-              child: Column(
-                children: [
-                  Row(
+      description: Text(
+        "보호 대상자에게서 공유 받은 코드를 입력해주세요",
+        style: theme.textTheme.b14.description(),
+      ),
+      widgets: [
+        Flexible(
+          flex: 0,
+          child: Column(
+            children: [
+              const Gap(60),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 1,
+                    color: theme.appColors.grayscale_04,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                  color: theme.appColors.white,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 16,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "보호자에게 코드를\n공유해주세요",
-                            style: theme.textTheme.h22.bold().title(),
-                          ),
-                          const Gap(24),
-                          Text(
-                            "보호 대상자에게서 공유 받은 코드를 입력해주세요",
-                            style: theme.textTheme.b14.description(),
-                          ),
-                        ],
+                      Text(
+                        '${userViewModel.user?.code}',
+                        style: theme.textTheme.h22.bold().title(),
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-            Flexible(
-              flex: 0,
-              child: Column(
-                children: [
-                  const Gap(60),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 1,
-                        color: theme.appColors.grayscale_04,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                      color: theme.appColors.white,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 4,
-                        vertical: 16,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${userViewModel.user?.code}',
-                            style: theme.textTheme.h22.bold().title(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Gap(60),
-                ],
-              ),
-            ),
-            Flexible(
-              flex: 1,
-              child: HolocareButton(
-                title: "복사하기",
-                onTap: () async {
-                  await Clipboard.setData(
-                    ClipboardData(text: "${userViewModel.user!.code}"),
-                  );
-                },
-              ),
-            )
-          ],
+              const Gap(60),
+            ],
+          ),
         ),
-      ),
+        Flexible(
+          flex: 1,
+          child: HolocareButton(
+            title: "복사하기",
+            onTap: () async {
+              await Clipboard.setData(
+                ClipboardData(text: "${userViewModel.user!.code}"),
+              );
+            },
+          ),
+        )
+      ],
     );
   }
 }

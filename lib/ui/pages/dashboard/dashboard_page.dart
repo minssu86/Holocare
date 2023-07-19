@@ -8,8 +8,8 @@ import 'package:gap/gap.dart';
 import 'package:holocare/hooks/use_router.dart';
 import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
-import 'package:holocare/ui/components/appbar/dashboard_app_bar.dart';
 import 'package:holocare/ui/components/label/holocare_label.dart';
+import 'package:holocare/ui/components/layout/holocare_layout.dart';
 import 'package:holocare/ui/router/router.gr.dart';
 import 'package:holocare/ui/vm/dashboard_view_model.dart';
 import 'package:holocare/ui/vm/user_view_model.dart';
@@ -52,76 +52,53 @@ class DashboardPage extends HookConsumerWidget {
       return;
     }, [userViewModel.members]);
 
-    return Scaffold(
-      appBar: DashBoardAppBar(
-        onPressedSetting: () => router.push(const SettingRoute()),
+    return HolocareLayout(
+      actions: true,
+      onPressedAppbar: () => router.push(const SettingRoute()),
+      title: Text(
+        dashboardViewModel.activeLevel.title,
+        style: theme.textTheme.h28.title().bold(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 60,
-        ),
-        child: Column(
-          children: [
-            Flexible(
-              flex: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
+      description: Text(
+        "${dashboardViewModel.diff}시간 전에 활동을 확인했어요",
+        style: theme.textTheme.b14.description(),
+      ),
+      label: HolocareLabel(
+        text: dashboardViewModel.activeLevel.text,
+        background: dashboardViewModel.activeLevel.background,
+        textStyle: dashboardViewModel.activeLevel.textStyle,
+      ),
+      widgets: [
+        Flexible(
+          flex: 1,
+          child: Column(
+            children: [
+              const Gap(28),
+              Image(
+                image: AssetImage(
+                    "assets/images/${dashboardViewModel.activeLevel.image}"),
+                fit: BoxFit.fitWidth,
+              ),
+              const Gap(12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        dashboardViewModel.activeLevel.title,
-                        style: theme.textTheme.h28.title().bold(),
-                      ),
-                      const Gap(16),
-                      Text(
-                        "${dashboardViewModel.diff}시간 전에 활동을 확인했어요",
-                        style: theme.textTheme.b14.description(),
-                      ),
-                    ],
+                  Text(
+                    "최근 접속",
+                    style: theme.textTheme.c13.description(),
                   ),
-                  HolocareLabel(
-                    text: dashboardViewModel.activeLevel.text,
-                    background: dashboardViewModel.activeLevel.background,
-                    textStyle: dashboardViewModel.activeLevel.textStyle,
+                  const Gap(4),
+                  Text(
+                    dashboardViewModel.visited,
+                    style: theme.textTheme.c13.description().semiBold(),
                   ),
                 ],
-              ),
-            ),
-            Flexible(
-                flex: 1,
-                child: Column(
-                  children: [
-                    const Gap(28),
-                    Image(
-                      image: AssetImage(
-                          "assets/images/${dashboardViewModel.activeLevel.image}"),
-                      fit: BoxFit.fitWidth,
-                    ),
-                    const Gap(12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "최근 접속",
-                          style: theme.textTheme.c13.description(),
-                        ),
-                        const Gap(4),
-                        Text(
-                          dashboardViewModel.visited,
-                          style: theme.textTheme.c13.description().semiBold(),
-                        ),
-                      ],
-                    )
-                  ],
-                )),
-          ],
+              )
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
