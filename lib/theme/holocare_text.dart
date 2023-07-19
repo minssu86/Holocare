@@ -37,6 +37,7 @@ extension TextStyleExt on TextStyle {
   TextStyle white() => copyWith(color: HColor.white);
   TextStyle title() => copyWith(color: HColor.grayscale_01);
   TextStyle description() => copyWith(color: HColor.grayscale_03);
+  TextStyle primary() => copyWith(color: HColor.primary);
   TextStyle success() => copyWith(color: HColor.success);
   TextStyle caution() => copyWith(color: HColor.caution);
   TextStyle warning() => copyWith(color: HColor.warning);
