@@ -24,7 +24,6 @@ class HolocareLabel extends ConsumerWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 50,
         decoration: BoxDecoration(
           color: background,
           borderRadius: BorderRadius.circular(8),

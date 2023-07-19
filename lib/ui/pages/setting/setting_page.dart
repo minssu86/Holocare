@@ -70,8 +70,10 @@ class SettingPage extends HookConsumerWidget {
                       description: "보호 중지를 켜면 보호자에게 알림이 가지 않습니다.",
                       type: SettingItemType.switchBtn,
                       condition: settingViewModel.pause,
-                      onChanged: (condition) {
-                        settingViewModel.updatePause(condition);
+                      onChanged: (condition) async {
+                        await settingViewModel.updatePause(
+                            condition: condition,
+                            uuid: userViewModel.user?.uuid);
                       },
                     ),
                     const Gap(40),

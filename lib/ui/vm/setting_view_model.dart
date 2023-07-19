@@ -10,7 +10,7 @@ class SettingViewModel extends ChangeNotifier {
 
   SettingViewModel(this._reader) {
     _getStorage().then((value) {
-      if (value.containsKey("pause")) updatePause(value['pause']);
+      if (value.containsKey("pause")) updatePause(condition: value['pause']);
     });
   }
 
@@ -20,9 +20,10 @@ class SettingViewModel extends ChangeNotifier {
 
   bool get pause => _pause;
 
-  void updatePause(bool condition) async {
+  Future<void> updatePause({required bool condition, String? uuid}) async {
     final data = await _getStorage();
     data.update("pause", (_) => condition);
+    if (uuid != null) await _useCases.updateUser(uuid, {"pause": condition});
     _useCases.updateStorage(data);
     _pause = condition;
     notifyListeners();

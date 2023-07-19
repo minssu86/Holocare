@@ -31,7 +31,7 @@ class DashboardViewModel extends ChangeNotifier {
           .abs()
           .toString();
     }
-    changeActiveLevelType(num.parse(_diff));
+    changeActiveLevelType(target.pause ? double.infinity : num.parse(_diff));
     notifyListeners();
   }
 
