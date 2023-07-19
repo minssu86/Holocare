@@ -7,8 +7,10 @@ import 'package:holocare/theme/holocare_text.dart';
 import 'package:holocare/theme/holocare_theme.dart';
 import 'package:holocare/ui/components/appbar/holocare_app_bar.dart';
 import 'package:holocare/ui/components/clipboard/holocare_clipboard.dart';
+import 'package:holocare/ui/components/dialog/holocare_dialog.dart';
 import 'package:holocare/ui/components/item/setting_edit_item.dart';
 import 'package:holocare/ui/components/item/setting_item.dart';
+import 'package:holocare/ui/router/router.gr.dart';
 import 'package:holocare/ui/vm/user_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -61,7 +63,27 @@ class SettingEditPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   if (userViewModel.user?.role == Role.protector.role)
-                    SettingItem(type: SettingItemType.arrowBtn, title: "연결 끊기"),
+                    SettingItem(
+                      type: SettingItemType.arrowBtn,
+                      title: "연결 끊기",
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return HolocareDialog(
+                              title: "연결을 끊으시겠습니까?",
+                              content: "삭제한 데이터는 복구되지 않습니다.",
+                              button: "확인",
+                              action: () async {
+                                await userViewModel.deleteUser();
+                                router.popUntilRoot();
+                                router.push(const RootRoute());
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
                   if (userViewModel.user?.role == Role.protege.role)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -76,7 +98,26 @@ class SettingEditPage extends HookConsumerWidget {
                           for (int order = 1;
                               order <= protectos.length;
                               order++)
-                            SettingEditItem(title: "보호자 $order", order: order),
+                            SettingEditItem(
+                              title: "보호자 $order",
+                              order: order,
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) {
+                                    return HolocareDialog(
+                                      title: "연결을 끊으시겠습니까?",
+                                      content:
+                                          "삭제한 보호자 $order의 데이터는\n복구되지 않습니다.",
+                                      button: "확인",
+                                      action: () async {
+                                        router.pop();
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
                           const Gap(20),
                         ],
                       ),
