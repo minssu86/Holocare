@@ -42,3 +42,16 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# local env files
+*.env
+
+# firebase
+google-services.json
+firebase_app_id_file.json
+GoogleService-Info.plist
+
+# generate
+*.g.dart
+*.freezed.dart
+*.gr.dart
